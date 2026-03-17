@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerangaForge | L'Agence Digitale IA du Peuple Sénégalais</title>
+    <meta name="description" content="Générez vos CV, logos, flyers et sites web vitrines grâce à l'IA sur TerangaForge. Qualité agence, prix accessibles.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F172A', // Dark Slate for premium text
+                        surface: '#FFFFFF', // Pure White background
+                        surfaceAlt: '#F8FAFC', // Very light slate for cards
+                        accent: '#8B5CF6', // Electric Violet (AI vibe)
+                        accentGlow: '#D946EF', // Fuchsia Pink (Creative magic)
+                        gold: '#D4AF37', // Luxury touch
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'blob': 'blob 15s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(40px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 30px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        .aurora-bg {
+            background: #FFFFFF;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.08) 0%, transparent 50%);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #8B5CF6, #D946EF);
+        }
+        .ai-button {
+            position: relative;
+            background: linear-gradient(90deg, #8B5CF6, #D946EF);
+            z-index: 1;
+            overflow: hidden;
+        }
+        .ai-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, #D946EF, #8B5CF6);
+            z-index: -1;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+        .ai-button:hover::before {
+            opacity: 1;
+        }
+        .ai-glow {
+            box-shadow: 0 0 30px -5px rgba(217, 70, 239, 0.4);
+        }
+        .primary-glow {
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.3);
+        }
+        
+        /* GPU-accelerated decorative blobs for smooth scroll */
+        .gpu-blob {
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            pointer-events: none;
+            contain: layout style;
+        }
+
+        /* Sections with overflow must use containment */
+        section {
+            contain: layout style;
+        }
+
+        /* Custom scrollbar for horizontal portfolios */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans text-gray-600 bg-surface aurora-bg overflow-x-hidden selection:bg-accent selection:text-white">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav top-0">
+        <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accentGlow flex items-center justify-center shadow-lg ai-glow">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                </div>
+                <span class="font-outfit font-black text-2xl tracking-tight text-primary">
+                    Teranga<span class="text-gradient">Forge</span>
+                </span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-10 text-sm font-semibold tracking-wide">
+                <a href="#services" class="text-gray-600 hover:text-accent hover:-translate-y-0.5 transition-all">Nos Services</a>
+                <a href="#portfolio" class="text-gray-600 hover:text-accent hover:-translate-y-0.5 transition-all">Portfolio</a>
+                <a href="#tarifs" class="text-gray-600 hover:text-accent hover:-translate-y-0.5 transition-all">Tarifs</a>
+                <a href="../../TerangaLearn/index.html" class="text-gray-400 hover:text-primary transition-colors text-xs uppercase tracking-widest border-l border-gray-200 pl-8">Écosystème BOKK</a>
+            </div>
+
+            <!-- CTA -->
+            <div class="hidden md:flex items-center gap-4">
+                <button class="text-primary hover:text-accent font-bold text-sm tracking-wide transition-all hover:-translate-y-0.5">
+                    Connexion
+                </button>
+                <button class="ai-button text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide transition-all ai-glow hover:-translate-y-0.5 flex items-center gap-2">
+                    Obtenir mon CV en 30s <i data-lucide="wand-2" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden p-2 text-primary">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section class="min-h-screen pt-32 pb-20 relative flex flex-col justify-center items-center overflow-hidden">
+        <!-- Floating abstract AI elements -->
+        <div class="absolute top-[20%] left-[10%] w-64 h-64 bg-accent/10 rounded-full blur-[100px] animate-blob gpu-blob"></div>
+        <div class="absolute bottom-[20%] right-[10%] w-80 h-80 bg-accentGlow/10 rounded-full blur-[120px] animate-blob gpu-blob" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-6 lg:px-12 z-10 relative">
+            <div class="text-center max-w-5xl mx-auto">
+                
+                <!-- Tagline -->
+                <div class="inline-flex items-center gap-3 bg-white border border-gray-100 shadow-sm rounded-full px-5 py-2 mb-10" data-aos="fade-down">
+                    <i data-lucide="bot" class="w-4 h-4 text-accentGlow"></i>
+                    <span class="text-gray-500 text-xs font-bold uppercase tracking-widest">Généré par l'IA • Pensé pour l'humain</span>
+                </div>
+
+                <h1 class="font-outfit text-5xl md:text-7xl lg:text-[5.5rem] font-black leading-[1.05] mb-8 text-primary tracking-tight" data-aos="fade-up">
+                    Votre Agence Digitale <br/>
+                    Propulsée par <span class="italic font-heading text-gradient pr-2">l'Intelligence</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-medium leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                    CVs percutants, logos, flyers, et sites vitrines. La qualité d'une agence de luxe, instantanée, à un prix adapté à nos réalités.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6" data-aos="fade-up" data-aos-delay="200">
+                    <button class="ai-button text-white px-8 py-4 rounded-full font-bold text-base ai-glow hover:-translate-y-1 transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
+                        Générer mon CV IA <i data-lucide="file-text" class="w-5 h-5"></i>
+                    </button>
+                    <button class="bg-white border border-gray-200 shadow-sm hover:border-gray-300 hover:bg-gray-50 text-primary px-8 py-4 rounded-full font-bold text-base transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
+                        Explorer le catalogue <i data-lucide="layout-grid" class="w-5 h-5 text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="mt-16 flex items-center justify-center gap-8 text-sm text-gray-500 font-semibold" data-aos="fade-in" data-aos-delay="400">
+                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-50 shadow-sm"><i data-lucide="zap" class="w-4 h-4 text-gold"></i> Livraison Instantanée</div>
+                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-50 shadow-sm"><i data-lucide="smartphone" class="w-4 h-4 text-blue-500"></i> Payez par Wave/OM</div>
+                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-50 shadow-sm"><i data-lucide="check-circle" class="w-4 h-4 text-success"></i> 100% Autonome</div>
+                </div>
+            </div>
+            
+            <!-- Hero Dashboard Mockup -->
+            <div class="mt-20 relative max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="300">
+                <div class="glass-card rounded-t-3xl border-b-0 p-2 md:p-4 overflow-hidden relative shadow-2xl shadow-gray-200">
+                    <!-- Browser dots -->
+                    <div class="flex gap-2 mb-4 px-2 pt-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <!-- Content grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="col-span-1 md:col-span-2 relative rounded-2xl overflow-hidden group border border-gray-100">
+                            <img src="./img/cv1.jpg" alt="CV Professionnel" class="w-full h-[300px] md:h-[400px] object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6">
+                                <span class="bg-accent text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded mb-2 inline-block">Généré en 30s</span>
+                                <h3 class="text-white font-black text-xl">Profil : Ingénieur Logiciel</h3>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <div class="h-1/2 rounded-2xl overflow-hidden relative group border border-gray-100 bg-surfaceAlt">
+                                <img src="./img/logov.png" alt="Logo Design" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute inset-0 flex items-center justify-center bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="bg-primary/20 backdrop-blur-md p-3 rounded-full"><i data-lucide="eye" class="text-primary"></i></button>
+                                </div>
+                            </div>
+                            <div class="h-1/2 bg-surfaceAlt rounded-2xl border border-gray-100 p-6 flex flex-col justify-center">
+                                <i data-lucide="sparkles" class="text-accentGlow w-8 h-8 mb-4"></i>
+                                <h4 class="text-primary font-black mb-1">IA Assistante</h4>
+                                <p class="text-xs text-gray-500 font-medium">Remplissez le formulaire, l'IA rédige tout à votre place (profil, lettre...).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fade out bottom -->
+                <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== THE PROBLEM & SOLUTION ===================== -->
+    <section class="py-24 relative z-20">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="font-outfit text-3xl md:text-5xl font-black text-primary leading-tight mb-6">
+                        Ne perdez plus d'heures sur des outils compliqués.
+                    </h2>
+                    <p class="text-gray-500 leading-relaxed mb-6 font-medium">
+                        Avant, pour avoir un document visuel professionnel, il fallait payer une agence hors de prix, ou lutter avec des logiciels complexes. Ou bien aller au cybercafé du coin de la rue à Dakar pour un résultat souvent décevant.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed mb-8 font-medium">
+                        TerangaForge, c'est l'agence de communication du peuple. Propulsée par la technologie, elle vous livre un rendu digne des plus grandes agences, accessible depuis n'importe quel smartphone.
+                    </p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-primary font-bold">
+                            <div class="bg-success/10 p-1.5 rounded-full"><i data-lucide="check" class="w-4 h-4 text-success"></i></div>
+                            Pas besoin de compétences en design.
+                        </li>
+                        <li class="flex items-center gap-3 text-primary font-bold">
+                            <div class="bg-success/10 p-1.5 rounded-full"><i data-lucide="check" class="w-4 h-4 text-success"></i></div>
+                            Rédaction des textes par l'Intelligence Artificielle.
+                        </li>
+                        <li class="flex items-center gap-3 text-primary font-bold">
+                            <div class="bg-success/10 p-1.5 rounded-full"><i data-lucide="check" class="w-4 h-4 text-success"></i></div>
+                            Paiement local facile (Wave, Orange Money).
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="relative" data-aos="fade-left">
+                    <div class="absolute inset-0 bg-gradient-to-br from-accent/10 to-accentGlow/10 rounded-3xl transform rotate-3 blur-sm"></div>
+                    <div class="glass-card p-8 rounded-3xl relative">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-primary font-black text-xl">L'Atelier IA</h3>
+                            <span class="animate-pulse flex h-3 w-3">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accentGlow opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-3 w-3 bg-accentGlow"></span>
+                            </span>
+                        </div>
+                        
+                        <!-- Chat simulation -->
+                        <div class="space-y-4">
+                            <div class="bg-surfaceAlt p-4 rounded-xl rounded-tl-none border border-gray-100 w-[85%]">
+                                <p class="text-xs text-gray-400 font-bold mb-1">Utilisateur</p>
+                                <p class="text-sm text-primary font-medium">Je suis un comptable avec 3 ans d'XP. Fais-moi un CV professionnel avec une lettre de motivation.</p>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-accent/5 to-accentGlow/5 p-4 rounded-xl rounded-tr-none border border-accent/10 w-[85%] ml-auto">
+                                <p class="text-xs text-accent font-black mb-1 flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3"></i> Forge IA</p>
+                                <p class="text-sm text-primary font-medium mb-3">C'est prêt ! J'ai rédigé un profil accrocheur, mis en valeur vos compétences et généré le design.</p>
+                                <div class="bg-white p-2 rounded-lg flex items-center gap-3 border border-gray-200 cursor-pointer hover:border-accent/40 hover:shadow-sm transition-all">
+                                    <i data-lucide="file-check-2" class="text-success h-5 w-5"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-primary">CV_Comptable_Pro.pdf</p>
+                                        <p class="text-[10px] text-gray-500 font-semibold">Généré avec succès</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SERVICES BENTO GRID ===================== -->
+    <section id="services" class="py-24 bg-surfaceAlt border-y border-gray-100">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <p class="text-[10px] font-bold tracking-widest uppercase text-accentGlow mb-3" data-aos="fade-up">Ce que nous forgeons</p>
+                <h2 class="font-outfit text-4xl md:text-5xl font-black text-primary" data-aos="fade-up" data-aos-delay="100">
+                    Des créations <span class="text-gradient">sur-mesure</span>.
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Service 1 (Large) -->
+                <div class="glass-card md:col-span-2 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group" data-aos="fade-up">
+                    <div class="absolute right-0 top-0 w-64 h-full bg-gradient-to-l from-accent/5 to-transparent pointer-events-none"></div>
+                    <div class="flex flex-col md:flex-row gap-8 items-center h-full relative z-10">
+                        <div class="flex-1">
+                            <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 border border-accent/20">
+                                <i data-lucide="file-text" class="w-6 h-6 text-accent"></i>
+                            </div>
+                            <h3 class="font-outfit font-black text-2xl text-primary mb-3">CV & Lettres de Motivation IA</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-6 font-medium">
+                                Choisissez parmi une trentaine de templates premium. Notre IA rédige votre phrase d'accroche, réécrit vos expériences pour les rendre plus professionnelles, et génère la lettre parfaite associée. En 30 secondes.
+                            </p>
+                            <a href="#" class="text-accent hover:text-accentGlow font-bold text-sm flex items-center gap-1 transition-colors">Essayer l'outil CV <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                        </div>
+                        <div class="w-full md:w-1/2 flex gap-4 overflow-hidden rounded-xl border border-gray-200 opacity-90 group-hover:opacity-100 transition-opacity bg-white">
+                            <img src="./img/cv2.jpg" class="w-1/2 object-cover object-top h-48 rounded-lg" alt="Template CV">
+                            <img src="./img/lettre1.jpg" class="w-1/2 object-cover object-top h-48 rounded-lg hidden sm:block" alt="Template Lettre">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card rounded-[2rem] p-8 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-accentGlow/10 rounded-xl flex items-center justify-center mb-6 border border-accentGlow/20">
+                        <i data-lucide="palette" class="w-6 h-6 text-accentGlow"></i>
+                    </div>
+                    <h3 class="font-outfit font-black text-2xl text-primary mb-3">Design & Identité</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6 font-medium">
+                        Logos uniques, affiches publicitaires, flyers promotionnels et bannières pour les réseaux sociaux. L'agence graphique dans votre poche.
+                    </p>
+                    <img src="./img/logov.png" class="absolute -right-8 -bottom-8 w-40 h-40 object-contain opacity-30 group-hover:scale-110 group-hover:opacity-50 transition-all duration-500">
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card rounded-[2rem] p-8 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20">
+                        <i data-lucide="monitor" class="w-6 h-6 text-blue-500"></i>
+                    </div>
+                    <h3 class="font-outfit font-black text-2xl text-primary mb-3">Sites Web Vitrine</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6 font-medium">
+                        Vous êtes artisan ou petit entrepreneur ? Confiez-nous la création de votre carte de visite digitale. De luxe, comme ce site.
+                    </p>
+                </div>
+
+                <!-- Service 4 (Large) -->
+                <div class="glass-card md:col-span-2 rounded-[2rem] p-8 relative overflow-hidden bg-gradient-to-br from-gold/5 to-transparent border-gold/20" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center gap-6 mb-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center border border-gold/30">
+                            <i data-lucide="presentation" class="w-6 h-6 text-gold"></i>
+                        </div>
+                        <h3 class="font-outfit font-black text-2xl text-primary">Présentations Pro</h3>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium mb-6 max-w-2xl">
+                        Des présentations PowerPoint conçues par nos experts et notre IA pour vos soutenances, pitch decks de startups ou réunions d'affaires. Oubliez les slides ennuyeuses.
+                    </p>
+                    <!-- Small decorative pattern -->
+                    <div class="absolute right-0 bottom-0 opacity-20">
+                        <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="100" fill="url(#paint0_linear)"/>
+                            <defs>
+                                <linearGradient id="paint0_linear" x1="0" y1="0" x2="200" y2="100" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#D4AF37"/>
+                                    <stop offset="1" stop-color="#D4AF37" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PORTFOLIO SHOWCASE ===================== -->
+    <section id="portfolio" class="py-24 overflow-hidden relative">
+        <div class="container mx-auto px-6 lg:px-12 mb-12 flex justify-between items-end">
+            <div>
+                <h2 class="font-outfit text-3xl font-black text-primary mb-2">Nos Forges.</h2>
+                <p class="text-gray-500 font-medium">Aperçu des documents professionnels générés sur notre plateforme.</p>
+            </div>
+            <!-- Scroll Indicator -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="document.getElementById('portfolio-scroll').scrollBy({left:-340,behavior:'smooth'})" class="w-10 h-10 rounded-full border border-gray-200 hover:border-accent hover:text-accent flex items-center justify-center text-gray-400 transition-colors">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <button onclick="document.getElementById('portfolio-scroll').scrollBy({left:340,behavior:'smooth'})" class="w-10 h-10 rounded-full border border-gray-200 hover:border-accent hover:text-accent flex items-center justify-center text-gray-400 transition-colors">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Horizontal scrolling container -->
+        <div id="portfolio-scroll" class="flex gap-6 px-6 lg:px-12 overflow-x-auto hide-scrollbar pb-8 cursor-grab" data-aos="fade-in">
+            <!-- Items -->
+            <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl p-2 border border-gray-100 shadow-lg shadow-gray-200/50 hover:-translate-y-2 transition-transform">
+                <img src="./img/cv3.jpg" class="w-full h-96 object-cover object-top rounded-xl opacity-90 hover:opacity-100 transition-opacity border border-gray-100">
+                <div class="p-4 text-center">
+                    <p class="text-primary font-black text-sm">Template "Executive"</p>
+                </div>
+            </div>
+            <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl p-2 border border-gray-100 shadow-lg shadow-gray-200/50 hover:-translate-y-2 transition-transform">
+                <img src="./img/cv4.jpg" class="w-full h-96 object-cover object-top rounded-xl opacity-90 hover:opacity-100 transition-opacity border border-gray-100">
+                <div class="p-4 text-center">
+                    <p class="text-primary font-black text-sm">Template "Créatif"</p>
+                </div>
+            </div>
+            <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl p-2 border border-gray-100 shadow-lg shadow-gray-200/50 hover:-translate-y-2 transition-transform">
+                <img src="./img/lettre2.jpg" class="w-full h-96 object-cover object-top rounded-xl opacity-90 hover:opacity-100 transition-opacity border border-gray-100">
+                <div class="p-4 text-center">
+                    <p class="text-primary font-black text-sm">Lettre Rédigée par l'IA</p>
+                </div>
+            </div>
+            <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl p-2 border border-gray-100 shadow-lg shadow-gray-200/50 hover:-translate-y-2 transition-transform">
+                <img src="./img/cv8.jpg" class="w-full h-96 object-cover object-top rounded-xl opacity-90 hover:opacity-100 transition-opacity border border-gray-100">
+                <div class="p-4 text-center">
+                    <p class="text-primary font-black text-sm">Template "Modern Minimal"</p>
+                </div>
+            </div>
+            <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl p-2 border border-gray-100 shadow-lg shadow-gray-200/50 hover:-translate-y-2 transition-transform flex items-center justify-center bg-gradient-to-br from-surfaceAlt to-white relative">
+                <img src="./img/logov.png" class="w-3/4 object-contain opacity-90 hover:opacity-100 transition-opacity drop-shadow-xl mb-8">
+                <div class="absolute bottom-4 left-0 w-full text-center">
+                    <p class="text-primary font-black text-sm">Design Logo Exclusif</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TARIFS ===================== -->
+    <section id="tarifs" class="py-24 bg-surfaceAlt border-y border-gray-100">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <p class="text-[10px] font-bold tracking-widest uppercase text-accentGlow mb-3" data-aos="fade-up">Tarifs Transparents</p>
+                <h2 class="font-outfit text-4xl md:text-5xl font-black text-primary" data-aos="fade-up" data-aos-delay="100">
+                    Des prix <span class="text-gradient">honnêtes</span>.
+                </h2>
+                <p class="text-gray-500 font-medium mt-4 max-w-lg mx-auto" data-aos="fade-up" data-aos-delay="150">Pas l'agence hors de prix. Pas le cousin qui "connaît un peu Photoshop". Le juste milieu parfait.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Tier 1 -->
+                <div class="glass-card rounded-[2rem] p-8 flex flex-col" data-aos="fade-up">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-surfaceAlt rounded-xl flex items-center justify-center mb-4 border border-gray-100">
+                            <i data-lucide="file-text" class="w-6 h-6 text-gray-400"></i>
+                        </div>
+                        <h3 class="font-outfit font-black text-xl text-primary">Essentiel</h3>
+                        <p class="text-gray-400 text-sm font-medium mt-1">CV simple ou lettre IA</p>
+                    </div>
+                    <div class="mb-6 flex-1">
+                        <span class="font-outfit font-black text-4xl text-primary">1 500</span>
+                        <span class="text-gray-400 font-bold text-sm ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-500 font-medium">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> CV professionnel (1 template)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Lettre de motivation IA</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Téléchargement PDF HD</li>
+                    </ul>
+                    <button class="w-full bg-surfaceAlt hover:bg-gray-100 text-primary py-3 rounded-full font-bold text-sm transition-colors border border-gray-200">Choisir</button>
+                </div>
+
+                <!-- Tier 2 (Popular) -->
+                <div class="glass-card rounded-[2rem] p-8 flex flex-col relative border-accent/30 shadow-[0_20px_60px_-15px_rgba(139,92,246,0.15)]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span class="bg-gradient-to-r from-accent to-accentGlow text-white text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg">Le plus populaire</span>
+                    </div>
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 border border-accent/20">
+                            <i data-lucide="palette" class="w-6 h-6 text-accent"></i>
+                        </div>
+                        <h3 class="font-outfit font-black text-xl text-primary">Pro</h3>
+                        <p class="text-gray-400 text-sm font-medium mt-1">CV + Design graphique</p>
+                    </div>
+                    <div class="mb-6 flex-1">
+                        <span class="font-outfit font-black text-4xl text-primary">5 000</span>
+                        <span class="text-gray-400 font-bold text-sm ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-500 font-medium">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Tout du pack Essentiel</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Choix de 5 templates premium</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Logo ou flyer personnalisé</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> 2 révisions incluses</li>
+                    </ul>
+                    <button class="w-full ai-button text-white py-3 rounded-full font-bold text-sm ai-glow transition-all hover:-translate-y-0.5">Choisir</button>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="glass-card rounded-[2rem] p-8 flex flex-col" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center mb-4 border border-gold/20">
+                            <i data-lucide="crown" class="w-6 h-6 text-gold"></i>
+                        </div>
+                        <h3 class="font-outfit font-black text-xl text-primary">Entreprise</h3>
+                        <p class="text-gray-400 text-sm font-medium mt-1">Pack complet identité visuelle</p>
+                    </div>
+                    <div class="mb-6 flex-1">
+                        <span class="font-outfit font-black text-4xl text-primary">15 000</span>
+                        <span class="text-gray-400 font-bold text-sm ml-1">FCFA</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-500 font-medium">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Tout du pack Pro</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Site vitrine complet</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Charte graphique complète</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-success"></i> Support prioritaire</li>
+                    </ul>
+                    <button class="w-full bg-primary hover:bg-gray-800 text-white py-3 rounded-full font-bold text-sm transition-colors">Contacter</button>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-400 text-sm mt-10 font-medium" data-aos="fade-up" data-aos-delay="300">Paiement en FCFA via Wave, Orange Money ou Free Money.</p>
+        </div>
+    </section>
+
+    <!-- ===================== LOCAL ASSURANCE & CTA ===================== -->
+    <section class="py-20 relative z-20">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="bg-primary border border-gray-800 rounded-[3rem] p-10 md:p-16 text-center relative overflow-hidden primary-glow">
+                <!-- Background Glow -->
+                <div class="absolute inset-0 bg-gradient-to-r from-accent/10 via-primary to-accentGlow/10"></div>
+                
+                <!-- Sparkles -->
+                <i data-lucide="sparkles" class="absolute top-10 left-10 text-accent/50 w-8 h-8 animate-pulse"></i>
+                <i data-lucide="sparkles" class="absolute bottom-10 right-10 text-accentGlow/50 w-12 h-12 animate-pulse" style="animation-delay: 1s;"></i>
+
+                <h2 class="font-outfit text-3xl md:text-5xl font-black text-white mb-6 relative z-10">Prêt à faire briller votre profil ?</h2>
+                <p class="text-gray-400 max-w-xl mx-auto mb-10 relative z-10 font-medium">Payez en FCFA en toute sécurité via <span class="text-white font-bold">Wave</span> ou <span class="text-white font-bold">Orange Money</span>. Obtenez vos fichiers en haute résolution instantanément.</p>
+                
+                <button class="ai-button text-white px-10 py-5 rounded-full font-bold text-lg ai-glow hover:-translate-y-1 transition-all inline-flex items-center gap-3 relative z-10">
+                    Générer mon premier document <i data-lucide="wand-2" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="border-t border-gray-200 bg-surfaceAlt pt-16 pb-8 mt-10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 border-b border-gray-200 pb-12 mb-8">
+                <div class="text-center md:text-left">
+                    <span class="font-outfit font-black text-3xl tracking-tight text-primary mb-4 block flex items-center gap-2 justify-center md:justify-start">
+                        <i data-lucide="sparkles" class="w-6 h-6 text-accent"></i> Teranga<span class="text-gradient">Forge</span>
+                    </span>
+                    <p class="text-gray-500 font-medium text-sm max-w-[280px]">
+                        L'agence digitale IA du peuple sénégalais. Un service du réseau BOKK.
+                    </p>
+                </div>
+                <div class="flex gap-12 text-sm text-center md:text-left font-semibold">
+                    <div class="flex flex-col space-y-3">
+                        <span class="text-gray-400 font-bold uppercase tracking-wider mb-2 text-xs">Services</span>
+                        <a href="#" class="text-primary hover:text-accent transition-colors">Générateur de CV</a>
+                        <a href="#" class="text-primary hover:text-accent transition-colors">Création Logotypes</a>
+                        <a href="#" class="text-primary hover:text-accent transition-colors">Sites Vitrines</a>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <span class="text-gray-400 font-bold uppercase tracking-wider mb-2 text-xs">Écosystème</span>
+                        <a href="../../TerangaJob/index.html" class="text-primary hover:text-accent transition-colors">TerangaJob</a>
+                        <a href="../../TerangaLearn/index.html" class="text-primary hover:text-accent transition-colors">TerangaLearn</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-medium">
+                <p>&copy; 2026 Écosystème BOKK. Tous droits réservés.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+                    <a href="cgu.html" class="hover:text-primary transition-colors">CGU</a>
+                    <a href="confidentialite.html" class="hover:text-primary transition-colors">Confidentialité</a>
+                    <a href="mentions.html" class="hover:text-primary transition-colors">Mentions Légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Init AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50,
+        });
+
+        // Initialize Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>
