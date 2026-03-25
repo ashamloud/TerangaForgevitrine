@@ -1020,10 +1020,62 @@ async function downloadCV() {
     return;
   }
   
+  if (!isPaid) {
+    const btn = document.getElementById('download-btn-top');
+    const origBtnText = btn ? btn.innerHTML : '';
+    if (btn) { btn.innerHTML = '⏳ Sécurisation...'; btn.disabled = true; }
+
+    try {
+      const res = await fetch('/api/senepay-session', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Erreur API SenePay");
+
+      const paymentWindow = window.open(data.checkoutUrl, '_blank', 'width=500,height=700');
+      if (btn) btn.innerHTML = '⏳ Attente paiement...';
+
+      const pollInterval = setInterval(async () => {
+        try {
+          const statusRes = await fetch('/api/senepay-status?token=' + data.sessionToken);
+          const statusData = await statusRes.json();
+          if (statusData.status === "Complete") {
+            clearInterval(pollInterval);
+            isPaid = true;
+            if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
+            if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
+            alert("Paiement réussi ! Génération du PDF...");
+            generateAndDownloadPDF();
+          } else if (["Failed", "Cancelled", "Expired"].includes(statusData.status)) {
+            clearInterval(pollInterval);
+            if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
+            alert("Paiement échoué ou annulé.");
+          }
+        } catch(e) { console.error("Polling", e); }
+      }, 5000);
+
+      const checkPop = setInterval(() => {
+        if (!isPaid && paymentWindow && paymentWindow.closed) {
+          clearInterval(checkPop);
+          clearInterval(pollInterval);
+          if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
+        }
+      }, 1000);
+
+    } catch (e) {
+      alert("Erreur SenePay : " + e.message);
+      if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
+    }
+    return;
+  } else {
+    generateAndDownloadPDF();
+  }
+}
+
+async function generateAndDownloadPDF() {
+  const preview = document.getElementById('cv-preview-wrapper');
   const btn = document.getElementById('download-btn-top');
   const origBtnText = btn ? btn.innerHTML : '';
   if (btn) {
-    btn.innerHTML = '⏳ Traitement...';
+    btn.innerHTML = '⏳ Création PDF...';
     btn.disabled = true;
   }
 
