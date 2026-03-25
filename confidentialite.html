@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Politique de Confidentialité | TerangaForge</title>
-    
+    <title>Confidentialité | TerangaForge - Protection des Données</title>
+    <meta name="description" content="Politique de confidentialité de TerangaForge. Découvrez comment nous protégeons vos données personnelles et votre vie privée.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,6 +17,7 @@
                         surfaceAlt: '#F8FAFC',
                         accent: '#8B5CF6',
                         accentGlow: '#D946EF',
+                        success: '#10B981',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -26,13 +28,31 @@
             }
         }
     </script>
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Local CSS Fallback -->
+    <link rel="stylesheet" href="./css/pages.css">
+    <link rel="stylesheet" href="./css/style.css">
+
     <style>
+        .aurora-bg {
+            background: #FFFFFF;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.08) 0%, transparent 50%);
+        }
         .glass-nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
         .text-gradient {
@@ -41,14 +61,50 @@
             -webkit-text-fill-color: transparent;
             background-image: linear-gradient(to right, #8B5CF6, #D946EF);
         }
+        .ai-button {
+            position: relative;
+            background: linear-gradient(90deg, #8B5CF6, #D946EF);
+            z-index: 1;
+            overflow: hidden;
+        }
         .ai-glow {
             box-shadow: 0 0 30px -5px rgba(217, 70, 239, 0.4);
         }
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .legal-content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #0F172A;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .legal-content h2::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(to bottom, #8B5CF6, #D946EF);
+            border-radius: 4px;
+        }
+        .legal-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
     </style>
 </head>
-<body class="antialiased font-sans text-gray-600 bg-surfaceAlt overflow-x-hidden selection:bg-accent selection:text-white">
+<body class="antialiased font-sans text-gray-600 bg-surface aurora-bg overflow-x-hidden selection:bg-accent selection:text-white">
 
-    <nav class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav top-0 shadow-sm">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav top-0">
         <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accentGlow flex items-center justify-center shadow-lg ai-glow">
@@ -58,55 +114,54 @@
                     Teranga<span class="text-gradient">Forge</span>
                 </span>
             </a>
+
             <div class="hidden md:flex items-center space-x-10 text-sm font-semibold tracking-wide">
-                <a href="index.html#services" class="text-gray-600 hover:text-accent transition-all">Nos Services</a>
-                <a href="contact.html" class="text-gray-600 hover:text-accent transition-all">Contact</a>
+                <a href="index.html" class="text-gray-600 hover:text-accent transition-all">Accueil</a>
+                <a href="services.html" class="text-gray-600 hover:text-accent transition-all">Nos Services</a>
+                <a href="confidentialite.html" class="text-accent transition-all">Confidentialité</a>
             </div>
+
             <div class="hidden md:flex items-center gap-4">
-                <button class="bg-gradient-to-r from-accent to-accentGlow text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide transition-all ai-glow hover:-translate-y-0.5">
-                    Connexion
-                </button>
+                <a href="forge-cv-chat.html" class="ai-button text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide transition-all ai-glow flex items-center gap-2">
+                    Générer mon CV <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </a>
             </div>
+
+            <button class="md:hidden p-2 text-primary" id="mobileMenuToggle">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 bg-white text-center border-b border-gray-100 relative overflow-hidden">
-        <div class="absolute w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] top-0 left-1/2 -translate-x-1/2 pointer-events-none"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <h1 class="font-outfit text-4xl md:text-5xl font-black text-primary mb-6">Politique de Confidentialité</h1>
-            <p class="text-gray-500 font-medium max-w-xl mx-auto">Protection de vos données et utilisation éthique de l'IA.</p>
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-surfaceAlt border-b border-gray-100">
+        <div class="container mx-auto px-6 lg:px-12 text-center">
+            <h1 class="font-outfit text-4xl md:text-5xl font-black text-primary mb-4" data-aos="fade-up">Vie <span class="text-gradient italic">Privée</span></h1>
+            <p class="text-gray-400 font-medium max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Chez TerangaForge, la protection de vos données n'est pas une option, c'est un engagement sacré.
+            </p>
         </div>
     </section>
 
+    <!-- Main Content -->
     <section class="py-20">
         <div class="container mx-auto px-6 max-w-4xl">
-            <div class="bg-white rounded-[2.5rem] p-8 md:p-14 border border-gray-100 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.06)]">
+            <div class="glass-card rounded-[3rem] p-8 md:p-16 legal-content" data-aos="fade-up">
                 
-                <div class="prose max-w-none text-gray-600 font-medium space-y-8">
-                    
-                    <div>
-                        <h2 class="text-2xl font-outfit font-black text-primary mb-4 flex items-center gap-3"><i data-lucide="database" class="w-6 h-6 text-accent"></i> 1. Données collectées</h2>
-                        <p class="mb-4">
-                            Lorsque vous utilisez TerangaForge pour générer un CV, une lettre ou un brief de site web, nous collectons temporairement les informations que vous saisissez (parcours professionnel, nom, compétences). 
-                        </p>
-                    </div>
+                <h2>Collecte Ethique</h2>
+                <p>Nous ne collectons que les données strictement nécessaires à la réalisation de vos services. Pour un CV, cela inclut vos expériences et coordonnées. Pour un site vitrine, vos informations professionnelles.</p>
 
-                    <div>
-                        <h2 class="text-2xl font-outfit font-black text-primary mb-4 flex items-center gap-3"><i data-lucide="bot" class="w-6 h-6 text-accentGlow"></i> 2. Utilisation de l'Intelligence Artificielle</h2>
-                        <div class="bg-gradient-to-r from-accent/5 to-accentGlow/5 border border-accent/20 p-5 rounded-2xl mb-4">
-                            <strong class="text-primary flex items-center gap-2 mb-2">Notre modèle d'IA</strong>
-                            Vos données personnelles (Nom, Téléphone, Adresse) <strong>ne sont jamais utilisées</strong> pour entraîner nos modèles d'IA publics. Elles sont traitées de manière éphémère uniquement pour formater votre document final. L'IA de TerangaForge (connectée à l'écosystème BOKK) ne conserve pas la mémoire de votre CV.
-                        </div>
-                    </div>
+                <h2>Traitement par l'IA</h2>
+                <p>TerangaForge utilise des modèles d'IA souverains ou partenaires. Vos données personnelles sont traitées localement dans votre session et ne sont jamais utilisées pour entraîner des modèles publics tiers.</p>
 
-                    <div>
-                        <h2 class="text-2xl font-outfit font-black text-primary mb-4 flex items-center gap-3"><i data-lucide="shield-check" class="w-6 h-6 text-emerald-500"></i> 3. Durée de conservation</h2>
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li>Les fichiers générés (PDF, Images) sont conservés sur votre compte utilisateur tant que ce dernier est actif.</li>
-                            <li>Si vous demandez la suppression de votre compte, toutes les données associées (profil BOKK compris) sont effacées sous 7 jours ouvrés.</li>
-                        </ul>
-                    </div>
+                <h2>Sécurité des Données</h2>
+                <p>Toutes les communications sur notre plateforme sont chiffrées (SSL/TLS). Vos documents générés sont stockés de manière sécurisée et vous seul y avez accès via votre lien de session unique (ou compte BOKK).</p>
 
+                <h2>Vos Droits</h2>
+                <p>Conformément aux lois sur la protection des données au Sénégal, vous disposez d'un droit d'accès, de rectification et de suppression de vos données sur simple demande via notre canal WhatsApp officiel.</p>
+
+                <div class="mt-12 pt-8 border-t border-gray-100 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                    Propulsé par l'Écosystème BOKK - 2026
                 </div>
 
             </div>
@@ -114,12 +169,30 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-200 bg-surfaceAlt pt-10 pb-8 mt-10">
-        <div class="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-medium">
-            <p>&copy; 2026 Écosystème BOKK. Tous droits réservés.</p>
+    <footer class="border-t border-gray-200 bg-surfaceAlt pt-16 pb-8">
+        <div class="container mx-auto px-6 lg:px-12 text-center">
+            <span class="font-outfit font-black text-2xl tracking-tight text-primary mb-4 block">
+                Teranga<span class="text-gradient">Forge</span>
+            </span>
+            <div class="flex justify-center flex-wrap gap-8 text-xs font-bold text-gray-500 uppercase tracking-widest">
+                <a href="forge-cv-chat.html" class="hover:text-primary transition-colors">CV IA</a>
+                <a href="index.html" class="hover:text-primary transition-colors">Accueil</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+                <a href="cgu.html" class="hover:text-primary transition-colors">CGU</a>
+                <a href="confidentialite.html" class="text-accent">Confidentialité</a>
+            </div>
+            <p class="mt-8 text-[10px] text-gray-400 font-medium">
+                &copy; 2026 Écosystème BOKK. Protection garantie.
+            </p>
         </div>
     </footer>
 
-    <script>lucide.createIcons();</script>
+    <!-- Scripts -->
+    <script src="./js/loud.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        lucide.createIcons();
+    </script>
 </body>
 </html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://terangaforge.com/sitemap.xml

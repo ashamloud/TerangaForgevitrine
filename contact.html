@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Agence | TerangaForge</title>
-    
+    <link rel="canonical" href="https://terangaforge.com/contact.html">
+    <title>Contact | TerangaForge - L'Atelier Digital</title>
+    <meta name="description" content="Contactez l'équipe TerangaForge pour vos projets de CV IA, design et sites web vitrines au Sénégal.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,6 +18,7 @@
                         surfaceAlt: '#F8FAFC',
                         accent: '#8B5CF6',
                         accentGlow: '#D946EF',
+                        success: '#10B981',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -26,35 +29,23 @@
             }
         }
     </script>
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     
-    <style>
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-        }
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(to right, #8B5CF6, #D946EF);
-        }
-        .ai-button {
-            position: relative;
-            background: linear-gradient(90deg, #8B5CF6, #D946EF);
-            z-index: 1;
-            overflow: hidden;
-        }
-        .ai-glow {
-            box-shadow: 0 0 30px -5px rgba(217, 70, 239, 0.4);
-        }
-    </style>
-</head>
-<body class="antialiased font-sans text-gray-600 bg-surfaceAlt overflow-x-hidden selection:bg-accent selection:text-white">
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <nav class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav top-0 shadow-sm">
+    <link rel="stylesheet" href="./css/pages.css">
+    <link rel="stylesheet" href="./css/shared.css">
+</head>
+<body class="antialiased font-sans text-gray-600 bg-surface aurora-bg overflow-x-hidden selection:bg-accent selection:text-white">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav top-0">
         <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accentGlow flex items-center justify-center shadow-lg ai-glow">
@@ -64,73 +55,153 @@
                     Teranga<span class="text-gradient">Forge</span>
                 </span>
             </a>
+
             <div class="hidden md:flex items-center space-x-10 text-sm font-semibold tracking-wide">
-                <a href="index.html#services" class="text-gray-600 hover:text-accent transition-all">Nos Services</a>
+                <a href="index.html" class="text-gray-600 hover:text-accent transition-all">Accueil</a>
+                <a href="services.html" class="text-gray-600 hover:text-accent transition-all">Nos Services</a>
+                <a href="a-propos.html" class="text-gray-600 hover:text-accent transition-all">À Propos</a>
+                <a href="index.html#tarifs" class="text-gray-600 hover:text-accent transition-all">Tarifs</a>
                 <a href="contact.html" class="text-accent transition-all">Contact</a>
             </div>
+
             <div class="hidden md:flex items-center gap-4">
-                <button class="ai-button text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide transition-all ai-glow hover:-translate-y-0.5">
-                    Connexion
-                </button>
+                <a href="forge-cv-chat.html" class="ai-button text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide transition-all ai-glow flex items-center gap-2">
+                    Générer mon CV <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </a>
             </div>
+
+            <button class="md:hidden p-2 text-primary" id="mobileMenuToggle">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 bg-primary text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-accent/10 to-accentGlow/10 pointer-events-none"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <h1 class="font-outfit text-4xl md:text-5xl font-black text-white mb-6">Contacter l'Atelier</h1>
-            <p class="text-gray-400 font-medium max-w-xl mx-auto">Un problème avec une génération IA ? Une demande de PME pour une charte graphique complexe ? Les forgerons de BOKK vous écoutent.</p>
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileNav" class="fixed inset-0 z-[60] pb-10 bg-white/95 backdrop-blur-xl translate-x-full transition-transform duration-500 md:hidden">
+        <div class="flex flex-col h-full">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+                <span class="font-outfit font-black text-xl tracking-tight text-primary">
+                    Teranga<span class="text-gradient">Forge</span>
+                </span>
+                <button class="p-2 text-primary" id="closeMobileMenu">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex-1 flex flex-col items-center justify-center space-y-8 text-xl font-bold tracking-tight px-6 overflow-y-auto">
+                <a href="index.html" class="mobile-nav-link text-primary hover:text-accent transition-all">Accueil</a>
+                <a href="services.html" class="mobile-nav-link text-primary hover:text-accent transition-all">Nos Services</a>
+                <a href="a-propos.html" class="mobile-nav-link text-primary hover:text-accent transition-all">À Propos</a>
+                <a href="contact.html" class="mobile-nav-link text-accent transition-all">Contact</a>
+            </div>
+            <div class="px-6 py-8">
+                <a href="https://wa.me/221783055520" target="_blank" rel="noopener" class="w-full ai-button text-white py-4 rounded-xl font-bold ai-glow block text-center">
+                    Parler à un expert
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-20 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-accent/20 to-accentGlow/20 opacity-50"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="font-outfit text-4xl md:text-5xl font-black text-white mb-6" data-aos="fade-up">Contacter <span class="text-gradient italic">l'Atelier</span></h1>
+            <p class="text-gray-400 font-medium max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Un projet complexe ? Une demande personnalisée ? Nos forgerons digitaux sont à votre écoute pour transformer vos idées en réalité.
+            </p>
         </div>
     </section>
 
-    <section class="py-20 -mt-10 relative z-20">
+    <!-- Contact Form Section -->
+    <section class="py-20 -mt-20 relative z-20">
         <div class="container mx-auto px-6 max-w-4xl">
-            <div class="bg-white rounded-[2rem] p-8 md:p-12 border border-gray-100 shadow-xl shadow-gray-200/30">
-                
-                <form action="#" method="POST" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Nom Complet</label>
-                            <input type="text" class="w-full px-5 py-4 rounded-xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-medium text-primary" placeholder="Jean Dupont">
+            <div class="glass-card rounded-[3rem] p-8 md:p-12" data-aos="fade-up">
+                <form action="#" method="POST" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Nom Complet</label>
+                            <input type="text" class="w-full px-6 py-5 rounded-2xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-semibold text-primary" placeholder="Awa Diop">
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Email de contact</label>
-                            <input type="email" class="w-full px-5 py-4 rounded-xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-medium text-primary" placeholder="jean@entreprise.sn">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Email Professionnel</label>
+                            <input type="email" class="w-full px-6 py-5 rounded-2xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-semibold text-primary" placeholder="awa@entreprise.sn">
                         </div>
                     </div>
 
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Type de requête</label>
-                        <select class="w-full px-5 py-4 rounded-xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-medium text-primary appearance-none">
-                            <option>Assistance : Mon CV PDF ne se télécharge pas</option>
-                            <option>Projet : Création de marque (Logo + Site vitrine)</option>
-                            <option>Projet : Présentation PowerPoint Investisseur</option>
-                            <option>Partenariat ou Autre</option>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Objet de votre demande</label>
+                        <select class="w-full px-6 py-5 rounded-2xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-semibold text-primary appearance-none">
+                            <option>Identité Visuelle & Logo Premium</option>
+                            <option>Site Web Vitrine d'Excellence</option>
+                            <option>Générateur de CV (Support Technique)</option>
+                            <option>Partenariat Écosystème BOKK</option>
                         </select>
                     </div>
 
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Précisions</label>
-                        <textarea rows="5" placeholder="Détaillez votre projet ou votre problème..." class="w-full px-5 py-4 rounded-xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-medium text-primary"></textarea>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Précisions sur votre projet</label>
+                        <textarea rows="6" placeholder="Décrivez votre vision, vos objectifs et vos délais éventuels..." class="w-full px-6 py-5 rounded-2xl bg-surfaceAlt border border-gray-100 focus:outline-none focus:border-accent focus:bg-white transition-all font-semibold text-primary"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full py-4 ai-button text-white rounded-xl font-bold text-sm shadow-md hover:-translate-y-1 transition-transform flex items-center justify-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4"></i> Envoyer à l'Atelier
+                    <button type="submit" class="w-full py-5 ai-button text-white rounded-2xl font-black text-sm shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 ai-glow">
+                        <i data-lucide="send" class="w-5 h-5"></i> Envoyer à l'Atelier
                     </button>
+                    
+                    <p class="text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                        Réponse garantie sous 24h ouvrées par les forgerons BOKK.
+                    </p>
                 </form>
-
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-200 bg-surfaceAlt pt-10 pb-8 mt-10">
-        <div class="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-medium">
-            <p>&copy; 2026 Écosystème BOKK. Tous droits réservés.</p>
+    <footer class="border-t border-gray-200 bg-surfaceAlt pt-16 pb-8">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 border-b border-gray-200 pb-12 mb-8">
+                <div>
+                    <span class="font-outfit font-black text-3xl tracking-tight text-primary mb-4 block flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-6 h-6 text-accent"></i> Teranga<span class="text-gradient">Forge</span>
+                    </span>
+                    <p class="text-gray-500 font-medium text-sm max-w-[280px]">
+                        L'agence digitale IA du peuple sénégalais. Un service du réseau BOKK.
+                    </p>
+                </div>
+                <div class="flex gap-12 text-sm font-semibold">
+                    <div class="flex flex-col space-y-3">
+                        <span class="text-gray-400 font-bold uppercase tracking-wider mb-2 text-xs">Navigation</span>
+                        <a href="forge-cv-chat.html" class="text-primary hover:text-accent transition-colors">Générateur de CV</a>
+                        <a href="services.html" class="text-primary hover:text-accent transition-colors">Services</a>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <span class="text-gray-400 font-bold uppercase tracking-wider mb-2 text-xs">Écosystème</span>
+                        <a href="https://terangajob.vercel.app" class="text-primary hover:text-accent transition-colors">TerangaJob</a>
+                        <a href="https://terangalearn.vercel.app" class="text-primary hover:text-accent transition-colors">TerangaLearn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-medium">
+                <p>&copy; 2026 Écosystème BOKK. Tous droits réservés.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+                    <a href="cgu.html" class="hover:text-primary transition-colors">CGU</a>
+                    <a href="mentions.html" class="hover:text-primary transition-colors">Mentions Légales</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script>lucide.createIcons();</script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/221783055520" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contacter sur WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.118 1.524 5.845L.1 23.9l6.21-1.404A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.94a9.94 9.94 0 01-5.061-1.376l-.362-.215-3.759.85.867-3.66-.235-.376A9.94 9.94 0 012.06 12C2.06 6.51 6.51 2.06 12 2.06c5.49 0 9.94 4.45 9.94 9.94 0 5.49-4.45 9.94-9.94 9.94z"/></svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="./js/loud.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        lucide.createIcons();
+    </script>
 </body>
 </html>

@@ -4,8 +4,8 @@
 
 /* Variables CSS */
 :root {
-    --color-primary: #FF6B35;
-    --color-primary-dark: #E55A28;
+    --color-primary: #8B5CF6;
+    --color-primary-dark: #7C3AED;
     --color-black: #1A1A1A;
     --color-white: #FFFFFF;
     --color-gray-light: #F8F9FA;
@@ -306,7 +306,7 @@ body {
 .btn-primary:hover {
     background: var(--color-primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
 }
 
 .btn-secondary {
@@ -319,7 +319,7 @@ body {
     background: var(--color-primary);
     color: var(--color-white);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
 }
 
 .btn-white {
@@ -818,8 +818,8 @@ footer {
 
 /* 1. NOUVELLE IDENTITÉ VISUELLE (COULEURS FORGE) */
 :root {
-    --color-primary: #FF6B35; /* Orange Forge */
-    --color-primary-dark: #E55A28;
+    --color-primary: #8B5CF6;
+    --color-primary-dark: #7C3AED;
     --color-black: #1A1A1A; /* Anthracite moderne */
     --color-gray-dark: #4a4a4a;
 }
@@ -839,16 +839,16 @@ h1, h2, h3, .logo h1 {
     text-transform: uppercase;
     letter-spacing: 1px;
     padding: 12px 30px !important;
-    background: linear-gradient(90deg, var(--color-primary), #ff8c5f) !important;
+    background: linear-gradient(90deg, var(--color-primary), #D946EF) !important;
     border: none !important;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
     color: white !important;
     transition: all 0.3s ease !important;
 }
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5) !important;
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5) !important;
 }
 
 /* 2. EFFET GLASSMORPHISM (CARTES TRANSPARENTES) */
@@ -865,20 +865,20 @@ h1, h2, h3, .logo h1 {
 /* Animation au survol des cartes */
 .service-card:hover, .feature-card:hover, .why-item:hover {
     transform: translateY(-12px) scale(1.02) !important;
-    box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2) !important;
+    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2) !important;
     border-color: var(--color-primary) !important;
 }
 
 /* Style des icônes dans les cartes */
 .service-icon, .feature-icon, .why-icon {
-    background: linear-gradient(135deg, var(--color-primary), #ff8c5f) !important;
+    background: linear-gradient(135deg, var(--color-primary), #D946EF) !important;
     color: white !important;
     border: none !important;
 }
 
 /* Effet sur le badge "Bientôt disponible" */
 .service-badge {
-    background: linear-gradient(90deg, #ff3d00, #ff6b35) !important;
+    background: linear-gradient(90deg, #8B5CF6, #D946EF) !important;
     font-weight: 700;
     text-transform: uppercase;
 }
@@ -889,7 +889,7 @@ h1, h2, h3, .logo h1 {
 /* 1. EFFET PREMIUM SUR LES CARTES (L'agrandissement que tu voulais) */
 .service-card:hover, .feature-card:hover, .mission-card:hover {
     transform: translateY(-12px) scale(1.03) !important;
-    box-shadow: 0 20px 40px rgba(255, 107, 53, 0.25) !important;
+    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.25) !important;
     border-color: var(--color-primary) !important;
 }
 
@@ -908,7 +908,7 @@ h1, h2, h3, .logo h1 {
     cursor: pointer;
     display: none; /* Le JS le fera apparaître au scroll */
     z-index: 9999;
-    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     align-items: center;
     justify-content: center;

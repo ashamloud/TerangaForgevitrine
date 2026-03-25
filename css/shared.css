@@ -1,0 +1,100 @@
+/* ==========================================
+   TERANGAFORGE — STYLES PARTAGÉS
+   Toutes les classes communes entre les pages
+   ========================================== */
+
+.aurora-bg {
+    background: #FFFFFF;
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.08) 0%, transparent 50%);
+}
+
+.glass-nav {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.glass-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(139, 92, 246, 0.2);
+    box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
+}
+
+.text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, #8B5CF6, #D946EF);
+}
+
+.ai-button {
+    position: relative;
+    background: linear-gradient(90deg, #8B5CF6, #D946EF);
+    z-index: 1;
+    overflow: hidden;
+}
+.ai-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, #D946EF, #8B5CF6);
+    z-index: -1;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+}
+.ai-button:hover::before { opacity: 1; }
+
+.ai-glow { box-shadow: 0 0 30px -5px rgba(217, 70, 239, 0.4); }
+.primary-glow { box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.3); }
+
+.gpu-blob {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+    contain: layout style;
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ---- WhatsApp Floating Button ---- */
+.whatsapp-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+    transition: all 0.3s ease;
+    z-index: 900;
+}
+.whatsapp-float:hover {
+    transform: scale(1.12) translateY(-3px);
+    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

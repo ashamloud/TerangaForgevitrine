@@ -1,313 +1,236 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mentions légales - TerangaJob. Informations légales complètes sur notre entreprise et nos services.">
-    <meta name="keywords" content="mentions légales, informations légales, TerangaJob, Sénégal, entreprise">
-    <meta name="author" content="TerangaJob">
-    <title>Mentions légales - TerangaJob</title>
+    <title>Mentions Légales | TerangaForge - Transparence</title>
+    <meta name="description" content="Informations légales sur TerangaForge, l'agence digitale IA du réseau BOKK au Sénégal.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F172A',
+                        surface: '#FFFFFF',
+                        surfaceAlt: '#F8FAFC',
+                        accent: '#8B5CF6',
+                        accentGlow: '#D946EF',
+                        success: '#10B981',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Mentions légales - TerangaJob">
-    <meta property="og:description" content="Informations légales complètes sur TerangaJob">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://terangajob.com/mentions.html">
-    <meta property="og:image" content="./img/1766673819626-removebg-preview.png">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./img/logov.png">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/style.css">
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Local CSS Fallback -->
     <link rel="stylesheet" href="./css/pages.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        .aurora-bg {
+            background: #FFFFFF;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.08) 0%, transparent 50%);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #8B5CF6, #D946EF);
+        }
+        .ai-button {
+            position: relative;
+            background: linear-gradient(90deg, #8B5CF6, #D946EF);
+            z-index: 1;
+            overflow: hidden;
+        }
+        .ai-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, #D946EF, #8B5CF6);
+            z-index: -1;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+        .ai-button:hover::before {
+            opacity: 1;
+        }
+        .ai-glow {
+            box-shadow: 0 0 30px -5px rgba(217, 70, 239, 0.4);
+        }
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .legal-content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #0F172A;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .legal-content h2::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(to bottom, #8B5CF6, #D946EF);
+            border-radius: 4px;
+        }
+        .legal-content h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #8B5CF6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .legal-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .legal-content .info-card {
+            background: #F8FAFC;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+    </style>
 </head>
-<body>
-    <!-- Header Navigation -->
-    <header class="header" id="header">
-        <div class="header-content">
-            <div class="logo">
-                <h1>Teranga<span>Job</span></h1>
-            </div>
-            <nav class="nav">
-                <a href="index.html" class="nav-link">Accueil</a>
-                <a href="a-propos.html" class="nav-link">A propos</a>
-                <a href="services.html" class="nav-link">Services</a>
-                <a href="cgu.html" class="nav-link">CGU</a>
-            </nav>
-            <a href="https://wa.me/221783055520" target="_blank" class="btn-whatsapp-header">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/>
-                </svg>
-                WhatsApp
+<body class="antialiased font-sans text-gray-600 bg-surface aurora-bg overflow-x-hidden selection:bg-accent selection:text-white">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav top-0">
+        <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accentGlow flex items-center justify-center shadow-lg ai-glow">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                </div>
+                <span class="font-outfit font-black text-2xl tracking-tight text-primary">
+                    Teranga<span class="text-gradient">Forge</span>
+                </span>
             </a>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu mobile">
-                <span></span>
-                <span></span>
-                <span></span>
+
+            <div class="hidden md:flex items-center space-x-10 text-sm font-semibold tracking-wide">
+                <a href="index.html" class="text-gray-600 hover:text-accent transition-all">Accueil</a>
+                <a href="services.html" class="text-gray-600 hover:text-accent transition-all">Nos Services</a>
+                <a href="mentions.html" class="text-accent transition-all">Mentions</a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-4">
+                <a href="forge-cv-chat.html" class="ai-button text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide transition-all ai-glow flex items-center gap-2">
+                    Générer mon CV <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <button class="md:hidden p-2 text-primary" id="mobileMenuToggle">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
-    </header>
-
-    <!-- Navigation Mobile -->
-    <div class="mobile-nav" id="mobileNav">
-        <a href="index.html" class="mobile-nav-link">Accueil</a>
-        <a href="a-propos.html" class="mobile-nav-link">A propos</a>
-        <a href="services.html" class="mobile-nav-link">Services</a>
-        <a href="cgu.html" class="mobile-nav-link">CGU</a>
-    </div>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="main-content" main>
-        <div class="hero-content">
-            <h1 class="fade-in">Mentions légales</h1>
-            <p class="tagline slide-in-left">Informations légales complètes</p>
-            <p class="subtitle slide-in-right">Consultez nos mentions légales pour toutes les informations légales sur notre entreprise et nos services.</p>
+    <section class="pt-32 pb-16 bg-surfaceAlt border-b border-gray-100">
+        <div class="container mx-auto px-6 lg:px-12 text-center">
+            <h1 class="font-outfit text-4xl md:text-5xl font-black text-primary mb-4" data-aos="fade-up">Mentions <span class="text-gradient italic">Légales</span></h1>
+            <p class="text-gray-400 font-medium max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Informations légales relatives à l'exploitation de la plateforme TerangaForge par le réseau BOKK.
+            </p>
         </div>
     </section>
 
-    <!-- Content Section -->
-    <section class="content-section">
-        <div class="container">
-            
-            <!-- Entreprise -->
-            <div class="legal-block fade-in" data-animate data-delay="100">
-                <h2>📋 Informations sur l'entreprise</h2>
+    <!-- Main Content -->
+    <section class="py-20">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="glass-card rounded-[3rem] p-8 md:p-16 legal-content" data-aos="fade-up">
                 
-                <div class="info-box">
-                    <h3>TerangaJob</h3>
-                    <p><strong>Forme juridique :</strong> Entreprise individuelle</p>
-                    <p><strong>Siège social :</strong> Dakar, Sénégal</p>
-                    <p><strong>Téléphone :</strong> +221 78 305 55 20</p>
-                    <p><strong>Email :</strong> contact@terangajob.com</p>
-                    <p><strong>WhatsApp :</strong> +221 78 305 55 20</p>
-                    <p><strong>Site web :</strong> https://terangajob.com</p>
+                <h2>Éditeur du Site</h2>
+                <div class="info-card">
+                    <p><strong>Nom Commercial :</strong> TerangaForge</p>
+                    <p><strong>Propriété :</strong> Réseau Digital BOKK</p>
+                    <p><strong>Siège Social :</strong> Dakar, Sénégal</p>
+                    <p><strong>Responsable de Publication :</strong> L'équipe TerangaForge</p>
                 </div>
 
-                <h3>Directeur de la publication</h3>
-                <div class="info-box">
-                    <p><strong>Nom :</strong> TerangaJob</p>
-                    <p><strong>Rôle :</strong> Directeur de la publication et responsable éditorial</p>
-                    <p><strong>Contact :</strong> +221 78 305 55 20</p>
-                </div>
-            </div>
-
-            <!-- Hébergement -->
-            <div class="legal-block fade-in" data-animate data-delay="200">
-                <h2>🖥️ Hébergement</h2>
-                <div class="info-box">
-                    <p><strong>Prestataire d'hébergement :</strong> Service d'hébergement web professionnel</p>
-                    <p><strong>Localisation des serveurs :</strong> Union Européenne</p>
-                    <p><strong>Type d'hébergement :</strong> Mutualisé avec certificat SSL</p>
-                </div>
-                <p>
-                    Les informations techniques détaillées sur l'hébergeur peuvent être fournies sur demande justifiée conformément à la législation en vigueur.
-                </p>
-            </div>
-
-            <!-- Propriété intellectuelle -->
-            <div class="legal-block fade-in" data-animate data-delay="300">
-                <h2>©️ Propriété intellectuelle</h2>
-                
-                <h3>Contenu du site</h3>
-                <p>
-                    L'ensemble des contenus présents sur le site TerangaJob, incluant mais sans se limiter aux :
-                </p>
-                <ul>
-                    <li>Textes, articles, descriptions</li>
-                    <li>Images, photographies, illustrations</li>
-                    <li>Graphismes, logos, icônes</li>
-                    <li>Vidéos, animations</li>
-                    <li>Sons, musiques</li>
-                    <li>Logiciels, scripts</li>
-                    <li>Structure et organisation du site</li>
-                </ul>
-                
-                <p>
-                    est la propriété exclusive de TerangaJob, sauf mentions contraires explicites. Tous droits de reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site sont réservés.
-                </p>
-
-                <h3>Marques déposées</h3>
-                <div class="info-box">
-                    <p><strong>Marque :</strong> TerangaJob</p>
-                    <p><strong>Statut :</strong> Marque commerciale en cours de protection</p>
-                    <p><strong>Numéro d'enregistrement :</strong> En cours de dépôt</p>
+                <h2>Hébergement</h2>
+                <div class="info-card">
+                    <p><strong>Hébergeur :</strong> Vercel Inc. (ou prestataire partenaire)</p>
+                    <p><strong>Adresse :</strong> 340 S Lemon Ave #1110, Walnut, CA 91789, USA</p>
+                    <p><strong>Site Web :</strong> vercel.com</p>
                 </div>
 
-                <h3>Droits d'utilisation</h3>
-                <p>
-                    Toute utilisation des contenus à des fins autres que celles prévues par le site, notamment la reproduction, diffusion, modification, adaptation ou traduction, totale ou partielle, est strictement interdite sans autorisation écrite préalable de TerangaJob.
-                </p>
-            </div>
+                <h2>Propriété Intellectuelle</h2>
+                <p>L'intégralité du site (graphismes, code source, logos, textes) est protégée par les lois internationales sur le droit d'auteur et la propriété intellectuelle. Toute extraction ou reproduction non autorisée sans accord écrit de BOKK pourra donner lieu à des poursuites.</p>
 
-            <!-- Données personnelles -->
-            <div class="legal-block fade-in" data-animate data-delay="400">
-                <h2>🔒 Traitement des données personnelles</h2>
-                
-                <h3>Données collectées</h3>
-                <p>Nous collectons les données suivantes dans le cadre de nos services :</p>
-                <ul>
-                    <li><strong>Nom et prénom</strong> - Pour personnaliser nos échanges</li>
-                    <li><strong>Numéro de téléphone/WhatsApp</strong> - Pour vous contacter</li>
-                    <li><strong>Adresse email</strong> - Pour communications écrites</li>
-                    <li><strong>Informations professionnelles</strong> - Pour réaliser vos commandes</li>
-                    <li><strong>Données de paiement</strong> - Sécurisées via plateformes reconnues</li>
-                </ul>
+                <h2>Cookies & Traçage</h2>
+                <p>TerangaForge utilise des cookies techniques strictement nécessaires au fonctionnement de l'application (sauvegarde de session, préférences d'affichage). Aucun cookie de publicité tierce n'est utilisé sans votre consentement.</p>
 
-                <h3>Finalités du traitement</h3>
-                <p>Les données sont utilisées pour :</p>
-                <ul>
-                    <li>Réalisation des services commandés</li>
-                    <li>Communication client et suivi des commandes</li>
-                    <li>Amélioration de nos services</li>
-                    <li>Respect des obligations légales et comptables</li>
-                </ul>
+                <h2>Contact Légal</h2>
+                <p>Pour toute notification de contenu illicite ou demande relative à vos droits, merci d'utiliser exclusivement notre canal WhatsApp officiel : <strong>+221 78 305 55 20</strong>.</p>
 
-                <h3>Durée de conservation</h3>
-                <p>
-                    Les données sont conservées le temps nécessaire à la réalisation des finalités ci-dessus, conformément aux délais légaux de prescription.
-                </p>
-            </div>
-
-            <!-- Cookies et technologies -->
-            <div class="legal-block fade-in" data-animate data-delay="500">
-                <h2>🍪 Cookies et technologies similaires</h2>
-                
-                <h3>Types de cookies utilisés</h3>
-                <ul>
-                    <li><strong>Cookies essentiels :</strong> Nécessaires au fonctionnement du site</li>
-                    <li><strong>Cookies de performance :</strong> Pour analyser l'utilisation du site</li>
-                    <li><strong>Cookies de fonctionnalité :</strong> Pour mémoriser vos préférences</li>
-                </ul>
-
-                <h3>Gestion des cookies</h3>
-                <p>
-                    Vous pouvez gérer vos préférences cookies via les paramètres de votre navigateur. La désactivation de certains cookies peut affecter les fonctionnalités du site.
-                </p>
-            </div>
-
-            <!-- Responsabilité -->
-            <div class="legal-block fade-in" data-animate data-delay="600">
-                <h2>⚖️ Limitation de responsabilité</h2>
-                
-                <h3>Contenu du site</h3>
-                <p>
-                    TerangaJob s'efforce de fournir des informations exactes et à jour. Cependant, nous ne garantissons pas l'exhaustivité, la précision ou l'actualité des informations diffusées sur le site.
-                </p>
-
-                <h3>Liens hypertextes</h3>
-                <p>
-                    Le site peut contenir des liens vers des sites tiers. TerangaJob n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.
-                </p>
-
-                <h3>Services tiers</h3>
-                <p>
-                    Pour les paiements, nous faisons appel à des plateformes sécurisées reconnues. TerangaJob n'est pas responsable des éventuels problèmes liés à ces services tiers.
-                </p>
-            </div>
-
-            <!-- Litiges -->
-            <div class="legal-block fade-in" data-animate data-delay="700">
-                <h2>🏛️ Litiges et droit applicable</h2>
-                
-                <h3>Droit applicable</h3>
-                <p>
-                    Les présentes mentions légales sont soumises au droit sénégalais. En cas de litige, les tribunaux sénégalais seront seuls compétents.
-                </p>
-
-                <h3>Réclamation</h3>
-                <p>
-                    En cas de réclamation, nous vous invitons à nous contacter directement via WhatsApp au +221 78 305 55 20 pour trouver une solution amiable.
-                </p>
-
-                <h3>Médiation</h3>
-                <p>
-                    Si aucune solution amiable n'est trouvée, vous pouvez saisir les organismes de médiation compétents selon la législation en vigueur.
-                </p>
-            </div>
-
-            <!-- Mise à jour -->
-            <div class="legal-block fade-in" data-animate data-delay="800">
-                <h2>📅 Mise à jour des mentions</h2>
-                <div class="info-box">
-                    <p><strong>Dernière mise à jour :</strong> 5 janvier 2025</p>
-                    <p><strong>Prochaine révision prévue :</strong> 5 janvier 2026</p>
+                <div class="mt-12 pt-8 border-t border-gray-100 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                    Dernière mise à jour : 20 Mars 2026
                 </div>
-                <p>
-                    TerangaJob se réserve le droit de modifier ces mentions légales à tout moment. Les modifications entrent en vigueur dès leur publication en ligne.
-                </p>
-                <p>
-                    Nous vous invitons à consulter régulièrement cette page pour prendre connaissance des éventuelles mises à jour.
-                </p>
-            </div>
 
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="fade-in">Des questions sur nos mentions légales ?</h2>
-            <p class="fade-in">Notre équipe est à votre disposition pour toute clarification</p>
-            <div class="fade-in">
-                <a href="https://wa.me/221783055520" class="btn btn-white">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/>
-                    </svg>
-                    Contacter notre service
-                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">TerangaJob</div>
-                <p>Plus qu'un service, un accompagnement professionnel pour votre carrière et vos projets.</p>
+    <footer class="border-t border-gray-200 bg-surfaceAlt pt-16 pb-8">
+        <div class="container mx-auto px-6 lg:px-12 text-center">
+            <span class="font-outfit font-black text-2xl tracking-tight text-primary mb-4 block">
+                Teranga<span class="text-gradient">Forge</span>
+            </span>
+            <div class="flex justify-center flex-wrap gap-8 text-xs font-bold text-gray-500 uppercase tracking-widest">
+                <a href="forge-cv-chat.html" class="hover:text-primary transition-colors">CV IA</a>
+                <a href="index.html" class="hover:text-primary transition-colors">Accueil</a>
+                <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+                <a href="cgu.html" class="hover:text-primary transition-colors">CGU</a>
+                <a href="mentions.html" class="text-accent">Mentions</a>
             </div>
-            
-            <div class="footer-section">
-                <h3>Services</h3>
-                <div class="footer-links">
-                    <a href="services.html#cv">CV & Lettres</a>
-                    <a href="services.html#design">Design</a>
-                    <a href="services.html#admin">Admin</a>
-                    <a href="services.html#emplois">Emplois</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Entreprise</h3>
-                <div class="footer-links">
-                    <a href="a-propos.html">À propos</a>
-                    <a href="cgu.html">CGU</a>
-                    <a href="mentions.html">Mentions légales</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>📱 WhatsApp : +221 78 305 55 20</p>
-                <p>📍 Dakar, Sénégal</p>
-                <p>✉️ contact@terangajob.com</p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 TerangaJob. Tous droits réservés.</p>
+            <p class="mt-8 text-[10px] text-gray-400 font-medium">
+                &copy; 2026 Écosystème BOKK. Forgé avec passion au Sénégal.
+            </p>
         </div>
     </footer>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/221783055520" class="whatsapp-float" title="Contactez-nous sur WhatsApp">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/>
-        </svg>
-    </a>
-
-    <!-- JavaScript -->
-    <script src="./js/main.js"></script>
+    <!-- Scripts -->
+    <script src="./js/loud.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        lucide.createIcons();
+    </script>
 </body>
 </html>
