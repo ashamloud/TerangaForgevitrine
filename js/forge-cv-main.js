@@ -668,8 +668,26 @@ function updateProgress(count) {
   document.getElementById('progress-bar').style.width = percentage + '%';
   document.getElementById('progress-text').textContent = `${count} / ${totalInfos} infos collectées`;
 
-  if (count >= 7) {
-    document.getElementById('generate-section').classList.remove('hidden');
+  const genBtn = document.getElementById('generate-cv-btn');
+  const badge = document.getElementById('ready-badge');
+  const badgeText = document.getElementById('ready-text');
+  
+  if (count >= 5) {
+    if (genBtn) {
+      genBtn.disabled = false;
+      genBtn.classList.remove('btn-disabled');
+      genBtn.classList.add('btn-ready-pulse');
+    }
+    if (badge) badge.classList.remove('opacity-50');
+    if (badgeText) badgeText.textContent = 'Profil Prêt ! ✓';
+  } else {
+    if (genBtn) {
+      genBtn.disabled = true;
+      genBtn.classList.add('btn-disabled');
+      genBtn.classList.remove('btn-ready-pulse');
+    }
+    if (badge) badge.classList.add('opacity-50');
+    if (badgeText) badgeText.textContent = 'Collecte en cours...';
   }
 }
 
