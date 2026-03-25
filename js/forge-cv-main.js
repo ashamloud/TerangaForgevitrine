@@ -49,37 +49,33 @@ const generators = new Proxy({}, {
 // ============================================================
 // SYSTEM PROMPT
 // ============================================================
-const SYSTEM_PROMPT = `Tu es "Forge", l'assistant IA de TerangaForge. Ton rôle : collecter les informations de l'utilisateur pour un CV.
-RÈGLES DE CONVERSATION (CRITIQUE) :
-1. ✅ SOIS CONCIS : Ne répète JAMAIS tout le CV dans ton "message". 
-2. ✅ CONFIRMATION : Confirme uniquement la dernière information reçue (ex: "C'est noté pour Dakar !") et pose aussitôt la question suivante.
-3. ✅ MULTI-EXTRACTION : Si l'utilisateur donne plusieurs infos d'un coup (nom, email, ville...), extrais-les toutes dans le JSON et saute les questions correspondantes.
-4. ✅ MODE CARTE BLANCHE : Si l'utilisateur demande d'inventer, de tester, ou de remplir le CV (ex: "carte blanche", "invente tout", "remplis pour moi"), génère immédiatement un profil COMPLET et FICTIF (nom, poste, expériences détaillées, formations, compétences) et mets "complete": true.
+const SYSTEM_PROMPT = `Tu es "Forge", l'assistant IA de TerangaForge.
+TON RÔLE : Collecter les données de l'utilisateur pour remplir son profil de CV.
+⚠️ RÈGLE ABSOLUE : Réponds UNIQUEMENT en JSON. Jamais de texte brut, jamais de "Voici votre CV".
+⚠️ FICHIERS : Tu ne peux PAS générer de PDF, Word ou liens de téléchargement. Dis à l'utilisateur de cliquer sur le bouton "Générez votre CV" qui apparaît en bas à droite dès que les infos sont suffisantes.
 
-PHASES DE COLLECTE :
-1. Identité (Nom, Email, Tel)
-2. Localisation (Ville)
-3. Poste cible + Secteur
-4. Profil pro (3 lignes)
-5. Expériences (Employeur, Poste, Dates, 3 Missions précises, 1 Résultat) - Relance si vague !
-6. Formations (Diplôme, Côte, Année, Mention)
-7. Compétences & Langues (avec niveaux)
-8. Certifications & Loisirs (Optionnel)
+RÈGLES DE CONVERSATION :
+1. ✅ SOIS CONCIS : Confirme juste la dernière info et pose la question suivante.
+2. ✅ MULTI-EXTRACTION : Extrais toutes les infos possibles d'une seule phrase.
+3. ✅ MODE CARTE BLANCHE : Si l'utilisateur demande d'inventer, génère IMMÉDIATEMENT un JSON complet (nom, prenom, email, ville, poste, experience, formation, competences) et mets "complete": true.
 
-FORMAT JSON OBLIGATOIRE :
+FORMAT JSON REQUIS :
 {
-  "message": "Ta réponse courte à l'utilisateur",
-  "extracted": { ... données brutes ... },
-  "enriched": { "profil_enrichi": "...", "experience_enrichie": [...], "competences_enrichies": [...] },
-  "collected": nombre (1-14),
-  "section_actuelle": "nom_section",
-  "complete": false/true
+  "message": "Réponse courte confirmant la donnée et posant la question suivante",
+  "extracted": {
+    "nom": "...", "prenom": "...", "email": "...", "telephone": "...", "ville": "...", "poste": "...", "profil": "...",
+    "experience": [{"employeur":"...","poste":"...","dates":"...","missions":["..."]}],
+    "formation": [{"diplome":"...","ecole":"...","annee":"..."}],
+    "competences": ["..."], "langues": ["..."]
+  },
+  "enriched": { "profil_enrichi": "...", "experience_enrichie": [], "competences_enrichies": [] },
+  "collected": 1-14,
+  "section_actuelle": "identite",
+  "complete": false
 }
 
-Enrichissement (quand complete est true) : 
-- Profil : 3-4 lignes percutantes.
-- Missions : Utilise des verbes d'action (Géré, Optimisé, Déployé...).
-- Compétences : Reformule en mots-clés ATS (ex: "Logiciel X" -> "Expertise Logiciel X · Automatisation").`;
+Si l'utilisateur demande un PDF, réponds : {"message": "D'accord ! Cliquez sur le bouton 'Générez votre CV' en bas à droite pour télécharger votre PDF.", "extracted": {}, "collected": 14, "complete": true}`;
+
 
 
 
@@ -428,13 +424,17 @@ async function callGroq(messages, retryCount = 0, customUrl = "/api/groq") {
     console.log("Réponse Groq reçue.");
 
     if (data.choices && data.choices[0]) {
-      const content = data.choices[0].message.content;
+      let content = data.choices[0].message.content;
       console.log("Contenu brut:", content.substring(0, 100) + "...");
       
       try {
-        const jsonMatch = content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          const parsed = JSON.parse(jsonMatch[0]);
+        // Nettoyage plus agressif : trouver le premier '{' et le dernier '}'
+        const firstBrace = content.indexOf('{');
+        const lastBrace = content.lastIndexOf('}');
+        
+        if (firstBrace !== -1 && lastBrace !== -1) {
+          const jsonStr = content.substring(firstBrace, lastBrace + 1);
+          const parsed = JSON.parse(jsonStr);
           return {
             message: parsed.message || "Continuons ensemble !",
             extracted: parsed.extracted || {},
@@ -444,8 +444,7 @@ async function callGroq(messages, retryCount = 0, customUrl = "/api/groq") {
           };
         }
       } catch(e) {
-        console.warn("Échec parsing JSON, fallback texte brut.");
-        return { message: content, extracted: {}, collected: collectedCount, complete: false };
+        console.warn("Échec parsing JSON, on tente extraction basique.", e);
       }
       return { message: content, extracted: {}, collected: collectedCount, complete: false };
     }
