@@ -1,10 +1,6 @@
 // ============================================================
-// CONFIGURATION — Clé fragmentée pour passer la sécurité GitHub
+// CONFIGURATION
 // ============================================================
-const _p1 = "gsk_DI4pFBXIpZ";
-const _p2 = "XBJgUOr5dPWGdyb";
-const _p3 = "3FYtft39AZ9uMC7NI7bbC8kLvO7";
-const GROQ_API_KEY = _p1 + _p2 + _p3;
 const MODEL = "llama-3.1-8b-instant"; // Modèle de Production actif et gratuit
    
 // ============================================================
@@ -434,11 +430,10 @@ async function callGroq(messages, retryCount = 0) {
   console.log("Appel Groq avec", messages.length, "messages...");
   
   try {
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const response = await fetch("/api/groq", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${GROQ_API_KEY}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         model: MODEL,
@@ -733,11 +728,10 @@ async function generateProfile() {
   `;
 
   try {
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const response = await fetch("/api/groq", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${GROQ_API_KEY}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         model: MODEL,
@@ -1016,6 +1010,8 @@ function generateCV() {
   }
 }
 let availableWidth_fallback = 800;
+
+let isPaid = false; // Mémorise si le paiement de cette session a réussi
 
 async function downloadCV() {
   const preview = document.getElementById('cv-preview-wrapper');
