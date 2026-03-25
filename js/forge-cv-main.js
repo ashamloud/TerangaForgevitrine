@@ -370,12 +370,12 @@ async function startConversation() {
 // ============================================================
 // APPEL API GROQ (avec retry automatique sur 429)
 // ============================================================
-async function callGroq(messages, retryCount = 0) {
+async function callGroq(messages, retryCount = 0, customUrl = "/api/groq") {
   showTyping();
-  console.log("Appel Groq avec", messages.length, "messages...");
+  console.log("Appel Groq sur", customUrl, "avec", messages.length, "messages...");
   
   try {
-    const response = await fetch("/api/groq", {
+    const response = await fetch(customUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -392,8 +392,21 @@ async function callGroq(messages, retryCount = 0) {
     });
 
     if (!response.ok) {
+      if (response.status === 405) {
+        // Diagnostic for 405: Attempt fallback to direct .netlify path if on Netlify or suggest Vercel
+        const isNetlify = window.location.hostname.includes('netlify.app');
+        if (isNetlify && !messages[0]._fallback) {
+           messages[0]._fallback = true; // Avoid infinite loop
+           return callGroq(messages, 0, "/.netlify/functions/groq");
+        }
+        addMessage('ai', "⚠️ Erreur 405 : Votre serveur refuse les requêtes POST sur cette route. Vérifiez que vous êtes bien sur **Vercel** ou **Netlify**, et non sur GitHub Pages (qui bloque l'API).");
+        hideTyping();
+        return null;
+      }
+
       const errorData = await response.json().catch(() => ({}));
       console.error("Groq API Error:", response.status, errorData);
+
       
       if (response.status === 429 && retryCount < 2) {
         hideTyping();
@@ -685,6 +698,11 @@ async function generateProfile() {
         max_tokens: 300
       })
     });
+
+    if (response.status === 405) {
+        console.error("405 sur la génération de profil.");
+        return;
+    }
 
     const data = await response.json();
     if (data.choices && data.choices[0]) {
@@ -1006,7 +1024,11 @@ async function downloadCV() {
       }, 1000);
 
     } catch (e) {
-      alert("Erreur SenePay : " + e.message);
+      if (e.message.includes('405')) {
+          alert("Erreur 405 : Votre serveur bloque les paiements. Vérifiez que vous n'êtes pas sur GitHub Pages (utilisez Vercel ou Netlify).");
+      } else {
+          alert("Erreur SenePay : " + e.message);
+      }
       if (btn) { btn.innerHTML = origBtnText; btn.disabled = false; }
     }
     return;
