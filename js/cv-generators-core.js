@@ -62,44 +62,44 @@ window.ATS_ICONS = {
 
 window.atsLanguageBar = function(n, c1, c2) {
   const w = (n.includes('matern') || n.includes('Natif')) ? 95 : n.includes('C1') || n.includes('Bilingu') ? 85 : n.includes('B2') ? 70 : 50;
-  return \`
+  return `
     <div style="margin-bottom:8px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
-        <p style="font-size:8px; font-weight:700; color:\${c1}; text-transform:uppercase; letter-spacing:1px;">\${n}</p>
+        <p style="font-size:8px; font-weight:700; color:${c1}; text-transform:uppercase; letter-spacing:1px;">${n}</p>
       </div>
-      <div style="height:3px;background:#E5E7EB;border-radius:2px;"><div style="height:3px;background:linear-gradient(90deg,\${c1},\${c2||c1});border-radius:2px;width:\${w}%;"></div></div>
-    </div>\`;
+      <div style="height:3px;background:#E5E7EB;border-radius:2px;"><div style="height:3px;background:linear-gradient(90deg,${c1},${c2||c1});border-radius:2px;width:${w}%;"></div></div>
+    </div>`;
 };
 
 window.atsSkillBar = function(label, level, color, bg = '#E5E7EB') {
   const w = level === 'Expert' ? 95 : level === 'Avancé' ? 80 : level === 'Intermédiaire' ? 60 : 40;
-  return \`
+  return `
     <div style="margin-bottom:8px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
-        <p style="font-size:9.5px; color:#1f2937; font-weight:600;">\${label}</p>
-        <p style="font-size:7.5px; color:#6B7280; font-weight:700; text-transform:uppercase;">\${level}</p>
+        <p style="font-size:9.5px; color:#1f2937; font-weight:600;">${label}</p>
+        <p style="font-size:7.5px; color:#6B7280; font-weight:700; text-transform:uppercase;">${level}</p>
       </div>
-      <div style="height:3px;background:\${bg};border-radius:2px;"><div style="height:3px;background:\${color};border-radius:2px;width:\${w}%;"></div></div>
-    </div>\`;
+      <div style="height:3px;background:${bg};border-radius:2px;"><div style="height:3px;background:${color};border-radius:2px;width:${w}%;"></div></div>
+    </div>`;
 };
 
 window.renderDetailsSection = function(cv, iconColor = "#1D4ED8", textColor = "#374151") {
   let html = '';
-  if (cv.age) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.age}</span><p style="font-size:10px;color:\${textColor};">\${cv.age}</p></div>\`;
-  if (cv.nationalite) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.nat}</span><p style="font-size:10px;color:\${textColor};">\${cv.nationalite}</p></div>\`;
-  if (cv.situation_familiale) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.fam}</span><p style="font-size:10px;color:\${textColor};">\${cv.situation_familiale}</p></div>\`;
-  if (cv.permis) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.dr}</span><p style="font-size:10px;color:\${textColor};">\${cv.permis}</p></div>\`;
-  if (cv.mobilite) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.pin}</span><p style="font-size:10px;color:\${textColor};">\${cv.mobilite}</p></div>\`;
-  if (cv.disponibilite) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.cal}</span><p style="font-size:10px;color:\${textColor};">\${cv.disponibilite}</p></div>\`;
+  if (cv.age) html += `<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:${iconColor};">${window.ATS_ICONS.age}</span><p style="font-size:10px;color:${textColor};">${cv.age}</p></div>`;
+  if (cv.nationalite) html += `<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:${iconColor};">${window.ATS_ICONS.nat}</span><p style="font-size:10px;color:${textColor};">${cv.nationalite}</p></div>`;
+  if (cv.situation_familiale) html += `<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:${iconColor};">${window.ATS_ICONS.fam}</span><p style="font-size:10px;color:${textColor};">${cv.situation_familiale}</p></div>`;
+  if (cv.permis) html += `<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:${iconColor};">${window.ATS_ICONS.dr}</span><p style="font-size:10px;color:${textColor};">${cv.permis}</p></div>`;
+  if (cv.mobilite) html += `<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:${iconColor};">${window.ATS_ICONS.pin}</span><p style="font-size:10px;color:${textColor};">${cv.mobilite}</p></div>`;
+  if (cv.disponibilite) html += `<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:${iconColor};">${window.ATS_ICONS.cal}</span><p style="font-size:10px;color:${textColor};">${cv.disponibilite}</p></div>`;
   return html;
 };
 
 window.atsSec = function(ico, label, color, borderColor) {
-  return \`<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:6px;border-bottom:1.5px solid \${borderColor||'#E5E7EB'};\"><span style="color:\${color};display:flex;align-items:center;transform:translateY(1.5px);">\${ico}</span><p style="font-size:12.5px;font-weight:900;color:\${color};letter-spacing:2px;text-transform:uppercase;line-height:1;">\${label}</p></div>\`;
+  return `<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:6px;border-bottom:1.5px solid ${borderColor||'#E5E7EB'};"><span style="color:${color};display:flex;align-items:center;transform:translateY(1.5px);">${ico}</span><p style="font-size:12.5px;font-weight:900;color:${color};letter-spacing:2px;text-transform:uppercase;line-height:1;">${label}</p></div>`;
 };
 
 window.atsBullet = function(b, accent, lh) {
-  return \`<div style="display:flex;gap:8px;margin-bottom:5px;"><span style="color:\${accent};flex-shrink:0;font-size:12.5px;line-height:\${lh||1.6};">›</span><p style="font-size:11px;color:#374151;line-height:\${lh||1.6};" >\${b}</p></div>\`;
+  return `<div style="display:flex;gap:8px;margin-bottom:5px;"><span style="color:${accent};flex-shrink:0;font-size:12.5px;line-height:${lh||1.6};">›</span><p style="font-size:11px;color:#374151;line-height:${lh||1.6};" >${b}</p></div>`;
 };
 
 window.buildMandala = function(color, size = 320, opacity = 1) {
