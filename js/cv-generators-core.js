@@ -18,23 +18,25 @@ window.getSmartLayout = function(cv) {
     else charCount += (e.missions || "").length;
   });
   (cv.formation || []).forEach(f => charCount += (f.diplome || "").length + (f.ecole || "").length);
-  (cv.competences || []).forEach(c => charCount += c.length);
-  (cv.references || []).forEach(r => charCount += (r.nom || "").length + (r.poste || "").length);
+  (cv.competences || []).forEach(c => charCount += (c.length || 0));
 
-  const isVeryShort = charCount < 500;
-  const isShort = charCount < 1000;
-  const isLong = charCount > 1800;
-  const isVeryLong = charCount > 2600;
+  const isTiny = charCount < 350;
+  const isVeryShort = charCount < 600;
+  const isShort = charCount < 1100;
+  const isLong = charCount > 1900;
+  const isVeryLong = charCount > 2700;
 
   return {
-    isVeryShort, isShort, isLong, isVeryLong,
-    baseSize: isVeryLong ? "10.5px" : isLong ? "11px" : isVeryShort ? "13px" : isShort ? "12.5px" : "11.5px",
-    lineHeight: 1.6,
-    sectionGap: isVeryLong ? "18px" : isLong ? "25px" : isVeryShort ? "60px" : isShort ? "45px" : "35px",
-    itemGap: isVeryLong ? "10px" : isLong ? "14px" : isVeryShort ? "28px" : isShort ? "22px" : "18px",
-    profileSize: isVeryShort ? "15px" : isShort ? "14px" : "12px",
-    sidebarPadding: isVeryShort ? "60px 30px" : isShort ? "50px 30px" : "40px 30px",
-    mainPadding: isVeryShort ? "70px 55px" : isShort ? "60px 50px" : "50px 45px"
+    isTiny, isVeryShort, isShort, isLong, isVeryLong,
+    baseSize: isVeryLong ? "11.0px" : isLong ? "12.0px" : isTiny ? "16.5px" : isVeryShort ? "15.5px" : isShort ? "14.0px" : "13.0px",
+    lineHeight: isTiny ? 2.0 : isVeryShort ? 1.85 : isLong ? 1.55 : 1.75,
+    sectionGap: isTiny ? "80px" : isVeryShort ? "65px" : isLong ? "26px" : isVeryLong ? "20px" : "40px",
+    itemGap: isTiny ? "45px" : isVeryShort ? "35px" : isLong ? "16px" : isVeryLong ? "14px" : "24px",
+    profileSize: isTiny ? "19.5px" : isVeryShort ? "18.0px" : isShort ? "16.0px" : "14.5px",
+    nameSize: isTiny ? "48px" : isVeryShort ? "44px" : isShort ? "38px" : "34px",
+    headerSize: isTiny ? "16.0px" : isVeryShort ? "14.0px" : "12.0px",
+    sidebarPadding: isTiny ? "60px 30px" : isVeryShort ? "50px 30px" : "40px 30px",
+    mainPadding: isTiny ? "85px 55px" : isVeryShort ? "75px 50px" : isShort ? "65px 45px" : "60px 45px"
   };
 };
 window.ATS_ICONS = {
@@ -49,21 +51,55 @@ window.ATS_ICONS = {
   ref: `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
   star: `<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`,
   chk: `<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
-  usr: `<svg width="52" height="52" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`
+  usr: `<svg width="52" height="52" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`,
+  age: `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>`,
+  nat: `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+  dr: `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>`,
+  fam: `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
+  cal: `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`
 };
 
 
-window.atsLangBar = function(n, c1, c2) {
+window.atsLanguageBar = function(n, c1, c2) {
   const w = (n.includes('matern') || n.includes('Natif')) ? 95 : n.includes('C1') || n.includes('Bilingu') ? 85 : n.includes('B2') ? 70 : 50;
-  return `<div style="height:3px;background:#E5E7EB;border-radius:2px;"><div style="height:3px;background:linear-gradient(90deg,${c1},${c2});border-radius:2px;width:${w}%;"></div></div>`;
+  return \`
+    <div style="margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+        <p style="font-size:8px; font-weight:700; color:\${c1}; text-transform:uppercase; letter-spacing:1px;">\${n}</p>
+      </div>
+      <div style="height:3px;background:#E5E7EB;border-radius:2px;"><div style="height:3px;background:linear-gradient(90deg,\${c1},\${c2||c1});border-radius:2px;width:\${w}%;"></div></div>
+    </div>\`;
+};
+
+window.atsSkillBar = function(label, level, color, bg = '#E5E7EB') {
+  const w = level === 'Expert' ? 95 : level === 'Avancé' ? 80 : level === 'Intermédiaire' ? 60 : 40;
+  return \`
+    <div style="margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+        <p style="font-size:9.5px; color:#1f2937; font-weight:600;">\${label}</p>
+        <p style="font-size:7.5px; color:#6B7280; font-weight:700; text-transform:uppercase;">\${level}</p>
+      </div>
+      <div style="height:3px;background:\${bg};border-radius:2px;"><div style="height:3px;background:\${color};border-radius:2px;width:\${w}%;"></div></div>
+    </div>\`;
+};
+
+window.renderDetailsSection = function(cv, iconColor = "#1D4ED8", textColor = "#374151") {
+  let html = '';
+  if (cv.age) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.age}</span><p style="font-size:10px;color:\${textColor};">\${cv.age}</p></div>\`;
+  if (cv.nationalite) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.nat}</span><p style="font-size:10px;color:\${textColor};">\${cv.nationalite}</p></div>\`;
+  if (cv.situation_familiale) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.fam}</span><p style="font-size:10px;color:\${textColor};">\${cv.situation_familiale}</p></div>\`;
+  if (cv.permis) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.dr}</span><p style="font-size:10px;color:\${textColor};">\${cv.permis}</p></div>\`;
+  if (cv.mobilite) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.pin}</span><p style="font-size:10px;color:\${textColor};">\${cv.mobilite}</p></div>\`;
+  if (cv.disponibilite) html += \`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="color:\${iconColor};">\${window.ATS_ICONS.cal}</span><p style="font-size:10px;color:\${textColor};">\${cv.disponibilite}</p></div>\`;
+  return html;
 };
 
 window.atsSec = function(ico, label, color, borderColor) {
-  return `<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid ${borderColor||'#E5E7EB'};"><span style="color:${color};display:flex;align-items:center;transform:translateY(1.5px);">${ico}</span><p style="font-size:9px;font-weight:700;color:${color};letter-spacing:2.5px;text-transform:uppercase;line-height:1;">${label}</p></div>`;
+  return \`<div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-bottom:6px;border-bottom:1.5px solid \${borderColor||'#E5E7EB'};\"><span style="color:\${color};display:flex;align-items:center;transform:translateY(1.5px);">\${ico}</span><p style="font-size:12.5px;font-weight:900;color:\${color};letter-spacing:2px;text-transform:uppercase;line-height:1;">\${label}</p></div>\`;
 };
 
-window.atsBullet = function(b, accent) {
-  return `<div style="display:flex;gap:8px;margin-bottom:5px;"><span style="color:${accent};flex-shrink:0;font-size:11px;line-height:1.6;">›</span><p style="font-size:9.5px;color:#374151;line-height:1.65;" >${b}</p></div>`;
+window.atsBullet = function(b, accent, lh) {
+  return \`<div style="display:flex;gap:8px;margin-bottom:5px;"><span style="color:\${accent};flex-shrink:0;font-size:12.5px;line-height:\${lh||1.6};">›</span><p style="font-size:11px;color:#374151;line-height:\${lh||1.6};" >\${b}</p></div>\`;
 };
 
 window.buildMandala = function(color, size = 320, opacity = 1) {
@@ -144,19 +180,36 @@ window.buildMandalaCV = function(cv, cfg) {
           <div style="display:flex;align-items:center;gap:8px;"><span style="color:${accentColor};display:flex;align-items:center;transform:translateY(1.5px);">${window.ATS_ICONS.pin}</span><p style="font-size:9px;color:${sbTextColor};line-height:1;">${cv.ville}</p></div>
         </div>
         <div style="width:100%;margin-bottom:14px;">
-          <p style="font-size:8px;font-weight:700;color:${accentColor};letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;text-align:center;">COMPÉTENCES</p>
-          ${(cv.competences || []).map(s => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><span style="color:${accentColor};display:flex;align-items:center;transform:translateY(1.5px);">${window.ATS_ICONS.chk}</span><p style="font-size:9px;color:${sbTextColor};line-height:1;">${s}</p></div>`).join('')}
+          <p style="font-size:8px;font-weight:700;color:${accentColor};letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;text-align:center;">COMPÉTENCES</p>
+          ${(cv.competences || []).slice(0, 8).map((s, i) => `
+            <div style="margin-bottom:8px;">
+               <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><p style="font-size:8.5px;color:white;font-weight:600;">${s}</p><p style="font-size:7px;color:${accentColor};font-weight:700;">${i < 3 ? 'EXPERT' : 'ADV'}</p></div>
+               <div style="height:2px;background:rgba(255,255,255,0.1);border-radius:1px;"><div style="height:100%;background:${accentColor};width:${i < 3 ? '95%' : '75%'};border-radius:1px;"></div></div>
+            </div>`).join('')}
         </div>
+        ${(cv.langues && cv.langues.length > 0) ? `
+        <div style="width:100%;margin-bottom:14px;">
+          <p style="font-size:8px;font-weight:700;color:${accentColor};letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;text-align:center;">LANGUES</p>
+          ${cv.langues.map(l => {
+            const n = typeof l === 'string' ? l : l.niveau || l.n;
+            const label = typeof l === 'string' ? l.split('(')[0].trim() : l.langues || l.l;
+            return `
+              <div style="margin-bottom:8px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><p style="font-size:8.5px;color:white;font-weight:600;">${label}</p><p style="font-size:7px;color:${accentColor};font-weight:700;">${n}</p></div>
+                <div style="height:2px;background:rgba(255,255,255,0.1);border-radius:1px;"><div style="height:100%;background:${accentColor};width:80%;border-radius:1px;"></div></div>
+              </div>`;
+          }).join('')}
+        </div>` : ''}
       </div>
     </div>
     <div style="flex:1;background:${bodyBg};padding:44px 34px;display:flex;flex-direction:column;font-family:${rightFont}; justify-content:flex-start;">
       <div style="margin-bottom:${s.sectionGap};padding-bottom:18px;border-bottom:1px solid ${metricBorder};">
-        <h1 style="font-size:40px;font-weight:900;color:${titleColor};letter-spacing:-1px;line-height:1;margin-bottom:5px;font-family:${font};">${cv.prenom} <span style="color:${accentColor === '#D4AF37' ? '#c4a010' : accentColor};">${cv.nom}</span></h1>
-        <p style="font-size:10px;color:${sectionColor};letter-spacing:4px;text-transform:uppercase;font-weight:700;">${cv.poste}</p>
+        <h1 style="font-size:${s.nameSize};font-weight:900;color:${titleColor};letter-spacing:-1px;line-height:0.9;margin-bottom:8px;font-family:${font};">${cv.prenom} <span style="color:${accentColor === '#D4AF37' ? '#c4a010' : accentColor};">${cv.nom}</span></h1>
+        <p style="font-size:${s.headerSize};color:${sectionColor};letter-spacing:4px;text-transform:uppercase;font-weight:700;">${cv.poste}</p>
       </div>
       <div style="margin-bottom:${s.sectionGap};padding:14px 16px;background:${chipBg};border-left:3px solid ${accentColor};border-radius:0 6px 6px 0;">
-        <p style="font-size:9px;font-weight:700;color:${sectionColor};letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;">PROFIL</p>
-        <p style="font-size:${s.baseSize};color:#4B5563;line-height:${s.lineHeight};">${cv.profil}</p>
+        <p style="font-size:8px;font-weight:700;color:${accentColor};text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">PROFIL</p>
+        <p style="font-size:${s.profileSize};color:${titleColor};line-height:${s.lineHeight};font-style:italic;opacity:0.9;">${cv.profil}</p>
       </div>
       <div style="margin-bottom:${s.sectionGap};">
         ${window.atsSec(window.ATS_ICONS.bag, "EXPÉRIENCES", titleColor, metricBorder)}
@@ -170,6 +223,42 @@ window.buildMandalaCV = function(cv, cfg) {
             ${Array.isArray(e.missions) ? e.missions.map(b => window.atsBullet(b, accentColor)).join('') : window.atsBullet(e.missions || '', accentColor)}
           </div>`).join('')}
       </div>
+      ${(cv.formation && cv.formation.length > 0) ? `
+      <div style="margin-bottom:${s.sectionGap};">
+        ${window.atsSec(window.ATS_ICONS.sch, "FORMATION", titleColor, metricBorder)}
+        ${cv.formation.map(f => `
+          <div style="margin-bottom:${s.itemGap};padding-left:14px;border-left:2px solid ${metricBorder};">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px;">
+              <p style="font-size:12px;font-weight:700;color:${titleColor};">${f.diplome}</p>
+              <span style="font-size:9px;color:${accentColor};font-weight:700;">${f.annee}</span>
+            </div>
+            <p style="font-size:10px;color:#64748b;">${f.ecole}</p>
+          </div>`).join('')}
+      </div>` : ''}
+      ${(cv.certifications && cv.certifications.length > 0) ? `
+      <div style="margin-bottom:${s.sectionGap};">
+        ${window.atsSec(window.ATS_ICONS.cert, "CERTIFICATIONS", titleColor, metricBorder)}
+        ${cv.certifications.map(c => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><span style="color:${accentColor};">${window.ATS_ICONS.chk}</span><p style="font-size:10px;color:#475569;">${typeof c === 'string' ? c : c.titre}</p></div>`).join('')}
+      </div>` : ''}
+      ${(cv.portfolio && cv.portfolio.length > 0) ? `
+      <div style="margin-bottom:${s.sectionGap};">
+        ${window.atsSec(window.ATS_ICONS.bag, "PROJETS", titleColor, metricBorder)}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+          ${cv.portfolio.map(p => `<div style="padding:10px;background:${chipBg};border:1px solid ${metricBorder};border-radius:6px;"><p style="font-size:10px;font-weight:700;color:${titleColor};">${p.nom}</p><p style="font-size:9px;color:#64748b;">${p.desc}</p></div>`).join('')}
+        </div>
+      </div>` : ''}
+      ${(cv.awards && cv.awards.length > 0) ? `
+      <div style="margin-bottom:${s.sectionGap};">
+        ${window.atsSec(window.ATS_ICONS.star, "DISTINCTIONS", titleColor, metricBorder)}
+        ${cv.awards.map(a => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><span style="color:${accentColor};">★</span><p style="font-size:10px;color:#475569;font-style:italic;">${a}</p></div>`).join('')}
+      </div>` : ''}
+      ${(cv.references && cv.references.length > 0) ? `
+      <div>
+        ${window.atsSec(window.ATS_ICONS.ref, "RÉFÉRENCES", titleColor, metricBorder)}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+          ${cv.references.map(r => `<div><p style="font-size:10px;font-weight:700;color:${titleColor};">${r.n || r.nom}</p><p style="font-size:9px;color:#64748b;">${r.p || r.poste}</p></div>`).join('')}
+        </div>
+      </div>` : ''}
     </div>
   </div>`;
 };

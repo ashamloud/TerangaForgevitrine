@@ -17,14 +17,25 @@ const CV_DATA = {
   // ── IDENTITÉ ──────────────────────────────────────────────────
   prenom:   "Mamadou",
   nom:      "DIALLO",
-  // Titre ATS : métier + certifications + domaine (mots-clés exacts)
   poste:    "Senior Project Manager · PMP® · Transformation Digitale",
   email:    "mamadou.diallo@email.sn",
   tel:      "+221 77 456 78 90",
   web:      "mamadou-diallo.sn",
   linkedin: "linkedin.com/in/mamadou-diallo-pmp",
   github:   "github.com/mamadou-diallo",
-  ville:    "Dakar, Sénégal",
+  ville:    "Dakar",
+  pays:     "Sénégal",
+  adresse:     "123 Rue de la République",
+  code_postal: "10000",
+  
+  // Nouveaux champs demandés
+  age:           "32 ans",
+  date_naissance: "15/05/1994",
+  permis:        "Permis B (Véhiculé)",
+  nationalite:   "Sénégalaise",
+  situation_familiale: "Célibataire",
+  disponibilite: "Immédiate",
+  mobilite:      "Nationale & Internationale",
 
   // ── PROFIL ────────────────────────────────────────────────────
   // Règle : hook (1 phrase) + expertise chiffrée + valeur mesurable
@@ -39,10 +50,18 @@ const CV_DATA = {
       // Champs courts (pour templates compacts)
       p: "Senior Project Manager",
       e: "Sonatel / Orange Sénégal",
+      v: "Dakar",
       d: "Jan. 2021 – Présent",
+      type_contrat: "CDI",
+      mois_debut: "Janvier",
+      annee_debut: "2021",
+      mois_fin: "",
+      annee_fin: "",
+      en_poste: true,
       // Champs longs (alias)
       poste:     "Senior Project Manager",
       employeur: "Sonatel / Orange Sénégal",
+      ville:     "Dakar",
       dates:     "Jan. 2021 – Présent",
       // KPI badge affiché sur le CV
       kpi:    "-35% délais · 100% livré",
@@ -117,22 +136,40 @@ const CV_DATA = {
   form: [
     {
       d:      "Master II — Informatique & Systèmes d'Information",
-      diplome:"Master II — Informatique & Systèmes d'Information",
       e:      "École Supérieure Polytechnique (ESP) — UCAD",
-      ecole:  "École Supérieure Polytechnique (ESP) — UCAD",
+      v:      "Dakar",
+      domaine:"Informatique",
       a:      "2016",
-      annee:  "2016",
       n:      "Mention Très Bien · Major de promo",
+      mois_debut: "Octobre",
+      annee_debut: "2014",
+      mois_fin: "Juillet",
+      annee_fin: "2016",
+      en_cours: false,
+      // Alias
+      diplome:"Master II — Informatique & Systèmes d'Information",
+      ecole:  "École Supérieure Polytechnique (ESP) — UCAD",
+      ville:  "Dakar",
+      annee:  "2016",
       note:   "Mention Très Bien · Major de promo"
     },
     {
       d:      "Licence Sciences Informatiques",
-      diplome:"Licence Sciences Informatiques",
       e:      "Université Gaston Berger — Saint-Louis",
-      ecole:  "Université Gaston Berger — Saint-Louis",
+      v:      "Saint-Louis",
+      domaine:"Mathématiques & Informatique",
       a:      "2014",
-      annee:  "2014",
       n:      "Mention Bien",
+      mois_debut: "Octobre",
+      annee_debut: "2011",
+      mois_fin: "Juillet",
+      annee_fin: "2014",
+      en_cours: false,
+      // Alias
+      diplome:"Licence Sciences Informatiques",
+      ecole:  "Université Gaston Berger — Saint-Louis",
+      ville:  "Saint-Louis",
+      annee:  "2014",
       note:   "Mention Bien"
     }
   ],
@@ -221,9 +258,19 @@ const ex = {
   tel:         CV_DATA.tel,
   telephone:   CV_DATA.tel,
   web:         CV_DATA.web,
-  linkedin:    CV_DATA.linkedin,
+  ln:          CV_DATA.linkedin,
   github:      CV_DATA.github,
   ville:       CV_DATA.ville,
+  pays:        CV_DATA.pays,
+  adresse:     CV_DATA.adresse,
+  code_postal: CV_DATA.code_postal,
+  age:         CV_DATA.age,
+  date_naissance: CV_DATA.date_naissance,
+  permis:      CV_DATA.permis,
+  nationalite: CV_DATA.nationalite,
+  situation_familiale: CV_DATA.situation_familiale,
+  disponibilite: CV_DATA.disponibilite,
+  mobilite:    CV_DATA.mobilite,
   vi:          CV_DATA.ville,
   profil:      CV_DATA.profil,
 
@@ -232,8 +279,14 @@ const ex = {
   experience:  CV_DATA.exp.map(e => ({
     poste:     e.poste,
     employeur: e.employeur,
+    ville:     e.ville,
     dates:     e.dates,
-    missions:  e.missions,
+    type_contrat: e.type_contrat,
+    mois_debut: e.mois_debut,
+    annee_debut: e.annee_debut,
+    en_poste:  e.en_poste,
+    missions:  Array.isArray(e.m) ? e.m.map(b => `• ${b}`).join('<br>') : e.missions,
+    m:         e.m,
     result:    e.result
   })),
 
@@ -242,8 +295,13 @@ const ex = {
   formation:   CV_DATA.form.map(f => ({
     diplome: f.diplome,
     ecole:   f.ecole,
+    ville:   f.ville,
+    domaine: f.domaine,
     annee:   f.annee,
-    note:    f.note
+    note:    f.note,
+    mois_debut: f.mois_debut,
+    annee_debut: f.annee_debut,
+    en_cours: f.en_cours
   })),
 
   // Certifications — format tableau de strings (anciens) et objets (nouveaux)

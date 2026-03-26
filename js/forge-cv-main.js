@@ -59,17 +59,18 @@ RÈGLES DE CONVERSATION :
 2. ✅ MULTI-EXTRACTION : Extrais toutes les infos possibles d'une seule phrase.
 3. ✅ MODE CARTE BLANCHE : Si l'utilisateur demande d'inventer, génère IMMÉDIATEMENT un JSON complet (nom, prenom, email, ville, poste, experience, formation, competences) et mets "complete": true.
 
-FORMAT JSON REQUIS :
+Format JSON REQUIS :
 {
   "message": "Réponse courte confirmant la donnée et posant la question suivante",
   "extracted": {
     "nom": "...", "prenom": "...", "email": "...", "telephone": "...", "ville": "...", "poste": "...", "profil": "...",
-    "experience": [{"employeur":"...","poste":"...","dates":"...","missions":["..."]}],
-    "formation": [{"diplome":"...","ecole":"...","annee":"..."}],
+    "adresse": "...", "code_postal": "...", "age": "...", "nationalite": "...", "situation_familiale": "...", "permis": "...", "mobilite": "...", "linkedin": "...",
+    "experience": [{"employeur":"...","poste":"...","ville":"...","type_contrat":"...","mois_debut":"...","annee_debut":"...","mois_fin":"...","annee_fin":"...","en_poste":false,"missions":["..."]}],
+    "formation": [{"diplome":"...","ecole":"...","ville":"...","domaine":"...","mois_debut":"...","annee_debut":"...","mois_fin":"...","annee_fin":"...","en_cours":false}],
     "competences": ["..."], "langues": ["..."]
   },
   "enriched": { "profil_enrichi": "...", "experience_enrichie": [], "competences_enrichies": [] },
-  "collected": 1-14,
+  "collected": 1-20,
   "section_actuelle": "identite",
   "complete": false
 }
@@ -122,6 +123,12 @@ function populateEditPanel() {
   document.getElementById('edit-email').value = cvData.email || '';
   document.getElementById('edit-telephone').value = cvData.telephone || '';
   document.getElementById('edit-ville').value = cvData.ville || '';
+  document.getElementById('edit-adresse').value = cvData.adresse || '';
+  document.getElementById('edit-code-postal').value = cvData.code_postal || '';
+  document.getElementById('edit-age').value = cvData.age || '';
+  document.getElementById('edit-nationalite').value = cvData.nationalite || '';
+  document.getElementById('edit-permis').value = cvData.permis || '';
+  document.getElementById('edit-mobilite').value = cvData.mobilite || '';
   document.getElementById('edit-profil').value = cvData.profil || '';
   
   const expContainer = document.getElementById('edit-experiences');
@@ -149,6 +156,12 @@ function applyEdits() {
   cvData.email = document.getElementById('edit-email').value;
   cvData.telephone = document.getElementById('edit-telephone').value;
   cvData.ville = document.getElementById('edit-ville').value;
+  cvData.adresse = document.getElementById('edit-adresse').value;
+  cvData.code_postal = document.getElementById('edit-code-postal').value;
+  cvData.age = document.getElementById('edit-age').value;
+  cvData.nationalite = document.getElementById('edit-nationalite').value;
+  cvData.permis = document.getElementById('edit-permis').value;
+  cvData.mobilite = document.getElementById('edit-mobilite').value;
   cvData.profil = document.getElementById('edit-profil').value;
   
   if (cvData.experience && cvData.experience.length > 0) {
@@ -254,25 +267,58 @@ function addDFLangue() {
 // SOUMETTRE LE FORMULAIRE DIRECT
 // ============================================================
 function submitDirectForm() {
-  const prenom = document.getElementById('df-prenom').value.trim();
-  const nom    = document.getElementById('df-nom').value.trim();
-  const poste  = document.getElementById('df-poste').value.trim();
-  if (!prenom || !nom || !poste) {
+  // 1. Validation des champs obligatoires
+  const mandatoryFields = [
+    { id: 'df-prenom', label: 'Prénom' },
+    { id: 'df-nom', label: 'Nom' },
+    { id: 'df-poste', label: 'Intitulé du poste' },
+    { id: 'df-ville', label: 'Ville' },
+    { id: 'df-telephone', label: 'Téléphone' },
+    { id: 'df-email', label: 'Email' }
+  ];
+
+  let errors = [];
+  mandatoryFields.forEach(f => {
+    const el = document.getElementById(f.id);
+    if (!el.value.trim()) {
+      errors.push(f.label);
+      el.classList.add('error');
+    } else {
+      el.classList.remove('error');
+    }
+  });
+
+  if (errors.length > 0) {
     const toast = document.createElement('div');
-    toast.style = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F172A;color:white;padding:14px 28px;border-radius:50px;border-bottom:3px solid #EF4444;z-index:9999;font-family:Inter,sans-serif;font-size:14px;';
-    toast.textContent = '⚠️ Veuillez remplir au minimum le Prénom, le Nom et le Poste.';
+    toast.style = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F172A;color:white;padding:14px 28px;border-radius:50px;border-bottom:3px solid #EF4444;z-index:9999;font-family:Inter,sans-serif;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);';
+    toast.innerHTML = `⚠️ Veuillez remplir les champs obligatoires : <b>${errors.join(', ')}</b>`;
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3500);
+    setTimeout(() => toast.remove(), 4000);
+    
+    // Scroll to first error
+    const firstError = document.querySelector('.df-input.error');
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
-  cvData.prenom    = prenom;
-  cvData.nom       = nom;
-  cvData.poste     = poste;
+  // 2. Collecte des données
+  cvData.prenom    = document.getElementById('df-prenom').value.trim();
+  cvData.nom       = document.getElementById('df-nom').value.trim();
+  cvData.poste     = document.getElementById('df-poste').value.trim();
+  cvData.adresse   = document.getElementById('df-adresse').value.trim();
+  cvData.code_postal = document.getElementById('df-code-postal').value.trim();
+  cvData.ville     = document.getElementById('df-ville').value.trim();
   cvData.email     = document.getElementById('df-email').value.trim();
   cvData.telephone = document.getElementById('df-telephone').value.trim();
-  cvData.ville     = document.getElementById('df-ville').value.trim();
+  
+  // Infos supp
+  cvData.age       = document.getElementById('df-age').value.trim();
+  cvData.nationalite = document.getElementById('df-nationalite').value.trim();
+  cvData.situation_familiale = document.getElementById('df-situation').value.trim();
+  cvData.permis    = document.getElementById('df-permis').value.trim();
+  cvData.mobilite  = document.getElementById('df-mobilite').value.trim();
   cvData.linkedin  = document.getElementById('df-linkedin').value.trim();
+  
   cvData.profil    = document.getElementById('df-profil').value.trim();
 
   cvData.experience = [];
@@ -280,9 +326,15 @@ function submitDirectForm() {
     const exp = {
       employeur: e.querySelector('.df-exp-employeur').value.trim(),
       poste:     e.querySelector('.df-exp-poste-val').value.trim(),
-      dates:     e.querySelector('.df-exp-dates').value.trim(),
-      missions:  e.querySelector('.df-exp-missions').value.split('\n')
-                  .map(m => m.trim().replace(/^[•\-]\s*/, '')).filter(m => m)
+      ville:     e.querySelector('.df-exp-ville').value.trim(),
+      type_contrat: e.querySelector('.df-exp-contrat').value,
+      mois_debut: e.querySelector('.df-exp-mois-debut').value.trim(),
+      annee_debut: e.querySelector('.df-exp-annee-debut').value.trim(),
+      mois_fin:   e.querySelector('.df-exp-mois-fin').value.trim(),
+      annee_fin:   e.querySelector('.df-exp-annee-fin').value.trim(),
+      en_poste:   e.querySelector('.df-exp-en-poste').checked,
+      missions:   e.querySelector('.df-exp-missions').value.split('\n')
+                   .map(m => m.trim().replace(/^[•\-]\s*/, '')).filter(m => m)
     };
     if (exp.employeur || exp.poste) cvData.experience.push(exp);
   });
@@ -290,10 +342,16 @@ function submitDirectForm() {
   cvData.formation = [];
   document.querySelectorAll('.df-form-entry').forEach(e => {
     const f = {
-      diplome: e.querySelector('.df-form-diplome').value.trim(),
       ecole:   e.querySelector('.df-form-ecole').value.trim(),
-      annee:   e.querySelector('.df-form-annee').value.trim(),
-      mention: e.querySelector('.df-form-mention').value.trim()
+      ville:   e.querySelector('.df-form-ville').value.trim(),
+      diplome: e.querySelector('.df-form-diplome').value.trim(),
+      domaine: e.querySelector('.df-form-domaine').value.trim(),
+      mention: e.querySelector('.df-form-mention').value.trim(),
+      mois_debut: e.querySelector('.df-form-mois-debut').value.trim(),
+      annee_debut: e.querySelector('.df-form-annee-debut').value.trim(),
+      mois_fin:   e.querySelector('.df-form-mois-fin').value.trim(),
+      annee_fin:   e.querySelector('.df-form-annee-fin').value.trim(),
+      en_cours:   e.querySelector('.df-form-en-cours').checked
     };
     if (f.diplome || f.ecole) cvData.formation.push(f);
   });
@@ -315,7 +373,7 @@ function submitDirectForm() {
   cvData.centres_interet = document.getElementById('df-centres').value
     .split(/[,\n]/).map(c => c.trim()).filter(c => c);
 
-  // Enriched = same as raw (pas d'IA)
+  // Enriched = same as raw (pas d'IA par défaut dans le formulaire direct)
   cvData.enriched.profil_enrichi        = cvData.profil;
   cvData.enriched.experience_enrichie   = cvData.experience.map(exp => ({...exp}));
   cvData.enriched.competences_enrichies = cvData.competences;
@@ -595,9 +653,13 @@ function renderCVData() {
     { key: 'email', label: 'Email', icon: '📧' },
     { key: 'telephone', label: 'Téléphone', icon: '📞' },
     { key: 'ville', label: 'Ville', icon: '📍' },
+    { key: 'adresse', label: 'Adresse', icon: '🏠' },
     { key: 'poste', label: 'Poste', icon: '💼' },
+    { key: 'age', label: 'Âge', icon: '🎂' },
+    { key: 'nationalite', label: 'Nationalité', icon: '🌍' },
+    { key: 'permis', label: 'Permis', icon: '🚗' },
     { key: 'competences', label: 'Compétences', icon: '⚡' },
-    { key: 'langues', label: 'Langues', icon: '🌍' }
+    { key: 'langues', label: 'Langues', icon: '💬' }
   ];
 
   let html = '';
@@ -662,7 +724,7 @@ function renderCVData() {
 // ============================================================
 function updateProgress(count) {
   collectedCount = count;
-  const totalInfos = 11; // 8 mandatory + 3 optional
+  const totalInfos = 20; // Augmenté pour inclure les nouveaux champs
   const percentage = Math.min((count / totalInfos) * 100, 100);
   document.getElementById('progress-bar').style.width = percentage + '%';
   document.getElementById('progress-text').textContent = `${count} / ${totalInfos} infos collectées`;
@@ -770,37 +832,6 @@ function filterTemplates(category) {
 
 function renderTemplatesGrid() {
   const allTemplates = [
-    { id: 'ats1', name: 'ATS — PERFORMANCE', cat: 'ats', desc: 'Indicateurs chiffrés' },
-    { id: 'ats2', name: 'ATS — ÉCHÉANCE', cat: 'ats', desc: 'Optimisé recruteur' },
-    { id: 'ats3', name: 'ATS — MINIMAL', cat: 'ats', desc: 'Structure pure' },
-    { id: 'ats4', name: 'ATS — SIDEBAR', cat: 'ats', desc: 'Design et score' },
-    { id: 'a1', name: 'ATS — MODERN BLUE', cat: 'ats', desc: 'Quadrillage subtil' },
-    { id: 'a2', name: 'ATS — CORPORATE GREEN', cat: 'ats', desc: 'Hexagones & Nature' },
-    { id: 'a3', name: 'ATS — EXECUTIVE DARK', cat: 'ats', desc: 'Luxe & Diagonales' },
-    { id: 'a4', name: 'ATS — MARINE STRIPE', cat: 'ats', desc: 'Structure latérale' },
-    { id: 'royal', name: 'Mandala Royal (Gold)', cat: 'ultra-premium', desc: 'Élégant, motifs royaux' },
-    { id: 'm1', name: 'Mandala Sapphire', cat: 'ultra-premium', desc: 'Bleu Marine & Or' },
-    { id: 'm2', name: 'Mandala Sahel', cat: 'ultra-premium', desc: 'Terracotta & Or' },
-    { id: 'm3', name: 'Mandala Forest', cat: 'ultra-premium', desc: 'Émeraude & Argent' },
-    { id: 'm4', name: 'Mandala Mystique', cat: 'ultra-premium', desc: 'Violet & Rose' },
-    { id: 'm5', name: 'Mandala Onyx', cat: 'ultra-premium', desc: 'Noir & Blanc pur' },
-    { id: 'm6', name: 'Mandala Cardinal', cat: 'ultra-premium', desc: 'Bordeaux & Rose Gold' },
-    { id: 's2', name: 'Kente Africain', cat: 'moderne', desc: 'Motifs tissés traditionnels' },
-    { id: 't1', name: 'AFRIQUE GÉOMÉTRIQUE', cat: 'moderne', desc: 'Design épuré' },
-    { id: 't2', name: 'DÉGRADÉ MODERNE', cat: 'moderne', desc: 'Couleurs vibrantes' },
-    { id: 't3', name: 'TROPICAL VERT & OR', cat: 'moderne', desc: 'Élégance naturelle' },
-    { id: 't4', name: 'DIPLOMATIQUE NAVY', cat: 'classique', desc: 'Sérieux, Institutionnel' },
-    { id: 't5', name: 'Minimaliste Noir', cat: 'pro', desc: 'Épuré, typographie forte' },
-    { id: 't6', name: 'Bordeaux & Or', cat: 'pro', desc: 'Élégant, premium' },
-    { id: 't7', name: 'Canada Clean', cat: 'canada', desc: 'Format canadien strict' },
-    { id: 't8', name: 'Canada Rouge Moderne', cat: 'canada', desc: 'Moderne et structuré' },
-    { id: 't9', name: 'Canada ATS-Friendly', cat: 'canada', desc: 'Optimisé recruteurs' },
-    { id: 't10', name: 'Créatif × Pro', cat: 'mix', desc: 'Motifs subtils + corporate' },
-    { id: 't11', name: 'Canada × Design', cat: 'mix', desc: 'Identité visuelle forte' },
-    { id: 't12', name: 'Africain × Canada', cat: 'mix', desc: 'Identité sénégalaise + norme Canada' },
-    { id: 'p1', name: 'Obsidian Gold', cat: 'ultra-premium', desc: 'Vagues dorées, Playfair Display' },
-    { id: 'p2', name: 'Diagonal Split', cat: 'ultra-premium', desc: 'Asymétrique, Space Grotesk' },
-    { id: 'p3', name: 'Wave Emerald', cat: 'ultra-premium', desc: 'Motifs complexes, DM Sans' },
     { id: 'p4', name: 'Crimson Executive', cat: 'ultra-premium', desc: 'Géométrie, Raleway' },
     { id: 'p5', name: 'Noir Absolu', cat: 'ultra-premium', desc: 'Grille points, Minimaliste' },
     { id: 'p6', name: 'Neo Brutalist', cat: 'ultra-premium', desc: 'Bords épais, Jaune & Noir' },
@@ -835,7 +866,12 @@ function renderTemplatesGrid() {
       {diplome: "Licence en Informatique", ecole: "UCAD — Dakar", annee: "2016"}
     ],
     competences: (cvData.competences && cvData.competences.length > 0) ? cvData.competences : ["Product Strategy", "Agile / Scrum", "Data Analytics", "User Research", "Figma", "SQL"],
-    langues: (cvData.langues && cvData.langues.length > 0) ? cvData.langues : ["Français (Natif)", "Anglais (Bilingue)", "Wolof (Courant)"]
+    langues: (cvData.langues && cvData.langues.length > 0) ? cvData.langues : ["Français (Natif)", "Anglais (Bilingue)", "Wolof (Courant)"],
+    nationalite: cvData.nationalite || "Sénégalaise",
+    age: cvData.age || "28 ans",
+    permis: cvData.permis || "Permis B (Véhiculé)",
+    mobilite: cvData.mobilite || "Internationale",
+    adresse: cvData.adresse || "Plateau, Rue 12 x 15"
   };
 
   const slider = document.getElementById('templates-grid');
@@ -922,6 +958,11 @@ function generateCV() {
     ],
     competences: (cvData.competences && cvData.competences.length > 0) ? cvData.competences : ["Gestion de projet", "Leadership", "Data Analytics"],
     langues: (cvData.langues && cvData.langues.length > 0) ? cvData.langues : ["Français (Natif)", "Anglais (Bilingue)", "Wolof (Courant)"],
+    nationalite: cvData.nationalite || 'Sénégalaise',
+    age: cvData.age || '28 ans',
+    permis: cvData.permis || 'Permis B',
+    mobilite: cvData.mobilite || 'Internationale',
+    adresse: cvData.adresse || 'Plateau, Rue 12 x 15',
     certifications: (cvData.certifications && cvData.certifications.length > 0) ? cvData.certifications : [],
     portfolio: (cvData.portfolio && cvData.portfolio.length > 0) ? cvData.portfolio : [],
     references: (cvData.references && cvData.references.length > 0) ? cvData.references : []
@@ -1101,13 +1142,22 @@ async function generateAndDownloadPDF() {
     }
 
     const canvas = await html2canvas(preview, {
-      scale: 2,
+      scale: 3, // Higher resolution
       useCORS: true,
       logging: false,
+      backgroundColor: '#ffffff',
       width: 794,
       height: 1123,
       windowWidth: 794,
-      windowHeight: 1123
+      windowHeight: 1123,
+      onclone: (clonedDoc) => {
+        const clonedPreview = clonedDoc.getElementById('cv-preview-wrapper');
+        if (clonedPreview) {
+          clonedPreview.style.transform = 'none';
+          clonedPreview.style.width = '794px';
+          clonedPreview.style.height = '1123px';
+        }
+      }
     });
 
     window.scrollTo(0, currentScrollY);
@@ -1133,9 +1183,14 @@ async function generateAndDownloadPDF() {
     const { jsPDF } = window.jspdf || {};
     if (!jsPDF) throw new Error('jsPDF non chargé');
     
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    const imgData = canvas.toDataURL('image/jpeg', 0.98);
-    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+    // Use 'pt' or 'mm' - 'mm' is standard for A4
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+    
+    // image/jpeg with high quality
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    
+    // Fill the A4 page (210mm x 297mm)
+    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'SLOW');
     
     const fileName = `CV_${(cvData.prenom || 'Teranga')}_${(cvData.nom || 'Forge')}.pdf`.replace(/\s+/g, '_');
     pdf.save(fileName);

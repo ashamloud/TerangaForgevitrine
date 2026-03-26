@@ -21,9 +21,9 @@
 <body class="min-h-screen">
 
 <!-- NAVBAR -->
-<nav style="background:white; border-bottom: 2px solid #EDE9FE; backdrop-filter:blur(8px); box-shadow:0 2px 16px rgba(139,92,246,0.08);" class="px-5 py-3 flex items-center justify-between sticky top-0 z-50">
+<nav style="background:var(--surface); border-bottom: 2px solid var(--border-color); backdrop-filter:blur(8px); box-shadow:var(--shadow-sm);" class="px-5 py-3 flex items-center justify-between sticky top-0 z-50">
   <a href="index.html" class="flex items-center gap-3 group">
-    <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#8B5CF6,#D946EF);box-shadow:0 4px 12px rgba(139,92,246,0.4);">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,var(--accent),var(--accent-glow));box-shadow:0 4px 12px rgba(139,92,246,0.4);">
       <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/></svg>
     </div>
     <span class="font-black text-xl text-gray-900" style="font-family:'Outfit',sans-serif">Teranga<span class="gradient-text">Forge</span></span>
@@ -57,10 +57,10 @@
 
   <!-- MODE SWITCHER -->
   <div class="flex items-center justify-center gap-3 mb-6 flex-wrap">
-    <button id="tab-chat" onclick="switchMode('chat')" class="tab-active flex items-center gap-2 px-5 py-3 rounded-full font-bold text-sm transition-all" style="border:1.5px solid transparent;">
+    <button id="tab-chat" onclick="switchMode('chat')" class="tab-active flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-sm transition-all">
       🤖 IA Conversationnelle
     </button>
-    <button id="tab-form" onclick="switchMode('form')" class="flex items-center gap-2 px-5 py-3 rounded-full font-bold text-sm transition-all" style="background:#F5F3FF;color:#7C3AED;border:1.5px solid #DDD6FE;">
+    <button id="tab-form" onclick="switchMode('form')" class="flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-sm transition-all" style="background:var(--surface-alt);color:var(--accent);border:1.5px solid var(--border-color);">
       📝 Formulaire Direct
     </button>
   </div>
@@ -69,13 +69,13 @@
   <div id="chat-section">
 
   <!-- PROGRESS BAR -->
-  <div class="mb-6 rounded-2xl p-5" style="background:white;border:1.5px solid #EDE9FE;box-shadow:0 4px 24px rgba(139,92,246,0.07);">
+  <div class="mb-6 rounded-2xl p-6 glass-effect" style="border:1.5px solid var(--border-color);box-shadow:var(--shadow-sm);">
     <div class="flex justify-between items-center mb-3">
       <span class="text-xs font-black text-gray-700 uppercase tracking-wider">📊 Progression du profil</span>
-      <span id="progress-text" class="text-xs font-black" style="color:#7C3AED;">0 / 14 infos collectées</span>
+      <span id="progress-text" class="text-xs font-black" style="color:var(--accent);">0 / 14 infos collectées</span>
     </div>
-    <div class="w-full rounded-full" style="background:#F3F0FF;height:10px;">
-      <div id="progress-bar" class="progress-bar rounded-full" style="width:0%;height:10px;"></div>
+    <div class="w-full rounded-full" style="background:#F3F0FF;height:12px;overflow:hidden;">
+      <div id="progress-bar" class="progress-bar rounded-full" style="width:0%;height:100%;"></div>
     </div>
     <div class="flex flex-wrap gap-2 mt-3" id="collected-tags"></div>
   </div>
@@ -145,14 +145,14 @@
 
       <!-- Bouton générer CV (Toujours visible, activé quand assez d'infos) -->
       <div id="generate-section">
-        <div class="rounded-2xl p-5 relative overflow-hidden" style="background:linear-gradient(135deg,#7C3AED,#D946EF);box-shadow:0 8px 32px rgba(139,92,246,0.4);border:1px solid rgba(255,255,255,0.15);">
+        <div class="rounded-2xl p-6 relative overflow-hidden" style="background:linear-gradient(135deg,var(--accent),var(--accent-glow));box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.15);">
           <div class="absolute -top-8 -right-8 w-32 h-32 rounded-full" style="background:rgba(255,255,255,0.07);"></div>
           <p id="ready-badge" class="text-[10px] font-black text-purple-100 uppercase tracking-widest mb-1 flex items-center gap-1 opacity-50">
             <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span id="ready-text">Collecte en cours...</span>
           </p>
-          <h4 class="text-white font-black text-base mb-4 leading-tight">Générez votre CV maintenant 🚀</h4>
-          <button id="generate-cv-btn" onclick="showEditor()" disabled class="btn-disabled w-full py-3.5 rounded-xl font-black text-sm flex justify-center items-center gap-2 transition-all hover:-translate-y-0.5" style="background:white;color:#7C3AED;box-shadow:0 4px 16px rgba(0,0,0,0.15);">
+          <h4 class="text-white font-black text-lg mb-4 leading-tight">Générez votre CV maintenant 🚀</h4>
+          <button id="generate-cv-btn" onclick="showEditor()" disabled class="btn-disabled w-full py-4 rounded-xl font-black text-sm flex justify-center items-center gap-2 transition-all hover:-translate-y-0.5" style="background:var(--surface);color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,0.15);">
             Ouvrir l'Éditeur de CV
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </button>
@@ -184,15 +184,71 @@
 
         <!-- 1 Identité -->
         <div>
-          <div class="df-section-title"><span class="df-num">1</span> Identité</div>
+          <div class="df-section-title"><span class="df-num">1</span> Coordonnées & Identité</div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input id="df-prenom" type="text" placeholder="Prénom *" class="df-input">
-            <input id="df-nom" type="text" placeholder="Nom *" class="df-input">
-            <input id="df-poste" type="text" placeholder="Intitulé du poste / Titre *" class="df-input sm:col-span-2">
-            <input id="df-email" type="email" placeholder="Email *" class="df-input">
-            <input id="df-telephone" type="text" placeholder="Téléphone (ex : +221 77 000 00 00)" class="df-input">
-            <input id="df-ville" type="text" placeholder="Ville, Pays *" class="df-input">
-            <input id="df-linkedin" type="text" placeholder="LinkedIn ou site web (optionnel)" class="df-input">
+            <div class="relative">
+              <label class="df-label">Prénom *</label>
+              <input id="df-prenom" type="text" placeholder="ex. Alexandra" class="df-input mandatory">
+            </div>
+            <div class="relative">
+              <label class="df-label">Nom *</label>
+              <input id="df-nom" type="text" placeholder="ex. Dupont" class="df-input mandatory">
+            </div>
+            <div class="relative sm:col-span-2">
+              <label class="df-label">Titre du CV / Intitulé de poste *</label>
+              <input id="df-poste" type="text" placeholder="ex. Vendeuse" class="df-input mandatory">
+            </div>
+            <div class="relative sm:col-span-2">
+              <label class="df-label">Adresse</label>
+              <input id="df-adresse" type="text" placeholder="ex. 24, rue Cadet" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">Code postal</label>
+              <input id="df-code-postal" type="text" placeholder="ex. 75009" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">Ville *</label>
+              <input id="df-ville" type="text" placeholder="ex. Ziguinchor" class="df-input mandatory">
+            </div>
+            <div class="relative">
+              <label class="df-label">Téléphone *</label>
+              <input id="df-telephone" type="text" placeholder="ex. 06 12 34 56 78" class="df-input mandatory">
+            </div>
+            <div class="relative">
+              <label class="df-label">Adresse e-mail *</label>
+              <input id="df-email" type="email" placeholder="ex. alexandra.dupont@exemple.fr" class="df-input mandatory">
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.bis Informations supplémentaires -->
+        <div>
+          <div class="df-section-title"><span class="df-num">+</span> Informations supplémentaires (optionnel)</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="relative">
+              <label class="df-label">Âge / Date de naissance</label>
+              <input id="df-age" type="text" placeholder="ex. 25 ans / 15/05/1994" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">Nationalité</label>
+              <input id="df-nationalite" type="text" placeholder="ex. Sénégalaise" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">Situation familiale</label>
+              <input id="df-situation" type="text" placeholder="ex. Célibataire" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">Permis / Véhiculé</label>
+              <input id="df-permis" type="text" placeholder="ex. Permis B" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">Disponibilité / Mobilité</label>
+              <input id="df-mobilite" type="text" placeholder="ex. Immédiate / Dakar" class="df-input">
+            </div>
+            <div class="relative">
+              <label class="df-label">LinkedIn / Site</label>
+              <input id="df-linkedin" type="text" placeholder="linkedin.com/in/..." class="df-input">
+            </div>
           </div>
         </div>
 
@@ -342,6 +398,36 @@ PMP - PMI - 2023" class="df-input resize-y"></textarea>
           <div>
             <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Ville</label>
             <input id="edit-ville" type="text" placeholder="Dakar, Sénégal" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+          </div>
+          <div class="flex gap-2">
+            <div class="flex-1">
+              <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Adresse</label>
+              <input id="edit-adresse" type="text" placeholder="Ex: 24, rue Cadet" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+            </div>
+            <div class="w-24">
+              <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">CP</label>
+              <input id="edit-code-postal" type="text" placeholder="75009" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Âge</label>
+              <input id="edit-age" type="text" placeholder="25 ans" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+            </div>
+            <div>
+              <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Nationalité</label>
+              <input id="edit-nationalite" type="text" placeholder="Sénégalaise" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Permis / Véhiculé</label>
+              <input id="edit-permis" type="text" placeholder="Permis B" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+            </div>
+            <div>
+              <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Mobilité</label>
+              <input id="edit-mobilite" type="text" placeholder="Internationale" class="w-full rounded-xl px-3 py-2.5 text-sm font-medium" style="border:1.5px solid #DDD6FE;outline:none;color:#1E1B4B;background:#FAFAFE;">
+            </div>
           </div>
           <div>
             <label class="block text-xs font-black text-gray-500 uppercase tracking-wider mb-1">Profil Professionnel</label>
